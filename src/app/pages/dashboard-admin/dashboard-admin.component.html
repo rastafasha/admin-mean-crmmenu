@@ -1,0 +1,70 @@
+<!-- =======| Main |======= -->
+<div class="container " id="main" class="main" role="main ">
+    <div class="col-xs-12 ">
+        <!-- Page Title -->
+        <div class="pagetitle animated fadeIn">
+            <div class="left">
+                <h1><i class="bx bxs-user-account"></i> {{title}}</h1>
+                <nav>
+                    <ol class="breadcrumb">
+                        <!-- <li class="breadcrumb-item"><a routerLink="/"><i class="bi bi-house"></i> Inicio</a></li> -->
+                        <li class="breadcrumb-item active">{{title}}</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="right shadow animated fadeIn">
+                <p>Bienvenido: </p>
+                <span class="badge bg-dark" *ngIf="user.role === 'SUPERADMIN'">SuperAdmin</span>
+                <span class="badge bg-primary" *ngIf="user.role === 'ADMIN'">Admin</span>
+            </div>
+        </div>
+        <!-- <div *ngIf="user.role == 'SUPERADMIN'">
+            <app-graficas></app-graficas>
+        </div> -->
+        <!-- <div *ngIf="user.role == 'SUPERADMIN'|| user.role == 'ADMIN' || user.role == 'EDITOR'">
+            <app-chart></app-chart>
+        </div> -->
+        <!-- banners planes -->
+        <!-- banners planes -->
+
+
+        <div class="clear"></div>
+
+        
+        <div class="row mt-3">
+           <div class="d-flex justify-content-end gap-3">
+             <div class="btn btn-primary" (click)="openEditModal()" href="javascript:void(0)"  data-bs-toggle="modal" data-bs-target="#editProject">
+                <i class="fa fa-plus"></i> <i class="fa fa-folder-o"></i>
+            </div>
+            <div class="btn btn-primary" href="javascript:void(0)"  data-bs-toggle="modal" data-bs-target="#editProjectType">
+                <i class="fa fa-plus"></i> <i class="fa fa-bookmark-o"></i>
+            </div>
+           </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-xs-12 col-sm-8">
+                <h3>Proyectos Aprobados</h3>
+                <app-line-chart [projects]="projects"></app-line-chart>
+            </div>
+            <div class="col-xs-12 col-sm-4">
+                <h3>Propuestas listos</h3>
+                <app-pie-chart2 [projects]="projects"></app-pie-chart2>
+            </div>
+        </div>
+        <!-- acceso iconos -->
+        <app-menuiconos></app-menuiconos>
+        <!-- acceso iconos -->
+        <app-project-list [displaycomponent]="displaycomponent" [limit]="limit"></app-project-list>
+
+        <!-- End Page Title -->
+
+
+    </div>
+
+
+
+</div>
+<!--/main-->
+
+<app-project-edit [projectSeleccionado]="projectSeleccionado"></app-project-edit>
+<app-projecttypeedit></app-projecttypeedit>
