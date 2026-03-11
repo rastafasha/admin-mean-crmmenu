@@ -14,16 +14,13 @@ import {
   FormArray,
   FormControl,
 } from '@angular/forms';
-import { Router, ActivatedRoute } from '@angular/router';
 import { Category } from 'src/app/models/category';
 import { Pais } from 'src/app/models/pais.model';
 import { Project, ProjectType } from 'src/app/models/project';
 import { User } from 'src/app/models/user';
 import { CategoryService } from 'src/app/services/category.service';
-import { FileUploadService } from 'src/app/services/file-upload.service';
 import { PaisService } from 'src/app/services/pais.service';
 import { ProjectService } from 'src/app/services/project.service';
-import { ProjecttypeService } from 'src/app/services/projecttype.service';
 import { UserService } from 'src/app/services/user.service';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
@@ -56,7 +53,6 @@ export class ProjectEditComponent implements OnInit, OnChanges {
     private fb: FormBuilder,
     private usuarioService: UserService,
     private projectService: ProjectService,
-    private projectTypeService: ProjecttypeService,
     private paisService: PaisService,
     private categoryService: CategoryService,
   ) {

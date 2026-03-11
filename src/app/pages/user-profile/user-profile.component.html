@@ -15,10 +15,11 @@
             </div>
             <!-- End Page Title -->
             <div class="buton">
-                <button class="btn btn-outline-danger pull-right" href="javascript:void(0)" (click)="goBack()">Volver</button>
+                <button class="btn btn-outline-danger pull-right" href="javascript:void(0)"
+                    (click)="goBack()">Volver</button>
             </div>
         </div>
-        
+
         <div class="clear"></div>
 
         <section class="section profile">
@@ -59,12 +60,14 @@
                             <ul class="nav nav-tabs nav-tabs-bordered">
 
                                 <li class="nav-item">
-                                    <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#detalle">Detalles</button>
+                                    <button class="nav-link active" data-bs-toggle="tab"
+                                        data-bs-target="#detalle">Detalles</button>
                                 </li>
                                 <li class="nav-item">
-                                    <button class="nav-link " data-bs-toggle="tab" data-bs-target="#historial">Historial Compras</button>
+                                    <button class="nav-link " data-bs-toggle="tab" data-bs-target="#historial">Historial
+                                        Compras</button>
                                 </li>
-                                
+
 
 
 
@@ -80,11 +83,13 @@
                                         <div *ngIf="profile">
                                             <div class="row">
                                                 <div class="col-xs-6 col-sm-6 col-md-4 b-r">
-                                                    <div class="col-12  label"><i class="bi bi-person-circle"></i> Nombre</div>
+                                                    <div class="col-12  label"><i class="bi bi-person-circle"></i>
+                                                        Nombre</div>
                                                     <div class="col-12  info">{{profile.first_name}}</div>
                                                 </div>
                                                 <div class="col-xs-6 col-sm-6 col-md-4 b-r">
-                                                    <div class="col-12  label"><i class="bi bi-person-circle"></i> Apellido</div>
+                                                    <div class="col-12  label"><i class="bi bi-person-circle"></i>
+                                                        Apellido</div>
                                                     <div class="col-12  info">{{profile.last_name}}</div>
                                                 </div>
 
@@ -94,27 +99,30 @@
                                             <div class="row">
 
                                                 <div class="col-xs-6 col-sm-6 col-md-3 b-r">
-                                                    <div class="col-12  label"><i class="bi bi-telephone"></i> Móvil</div>
+                                                    <div class="col-12  label"><i class="bi bi-telephone"></i> Móvil
+                                                    </div>
 
                                                     <div class="col-12  info">
                                                         <a href="tel:{{profile.telmovil}}" target="_blank">
-                                              {{profile.telmovil}}
-                                            </a>
+                                                            {{profile.telmovil}}
+                                                        </a>
                                                     </div>
                                                 </div>
                                                 <div class="col-xs-6 col-sm-6 col-md-3 b-r">
-                                                    <div class="col-12  label"><i class="bi bi-telephone"></i> Oficina | Home</div>
+                                                    <div class="col-12  label"><i class="bi bi-telephone"></i> Oficina |
+                                                        Home</div>
                                                     <div class="col-12  info">
                                                         <a href="tel:{{profile.telhome}}" target="_blank">
-                                              {{profile.telhome}}
-                                            </a>
+                                                            {{profile.telhome}}
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>
                                             <hr>
                                             <div class="row">
                                                 <div class="col-xs-12 col-sm-6 col-md-3 b-r">
-                                                    <div class="col-12  label"><i class="bi bi-telephone"></i> Pais</div>
+                                                    <div class="col-12  label"><i class="bi bi-telephone"></i> Pais
+                                                    </div>
                                                     <div class="col-12 info">{{profile.pais}}</div>
                                                 </div>
                                                 <div class="col-xs-6 col-sm-6 col-md-3 b-r">
@@ -122,7 +130,8 @@
                                                     <div class="col-12  info">{{profile.estado}}</div>
                                                 </div>
                                                 <div class="col-xs-12 col-sm-6 col-md-3 b-r">
-                                                    <div class="col-12  label"><i class="bi bi-file-text"></i> Dirección</div>
+                                                    <div class="col-12  label"><i class="bi bi-file-text"></i> Dirección
+                                                    </div>
                                                     <div class="col-12  info">
                                                         <p>{{profile.direccion}}</p>
 
@@ -132,40 +141,48 @@
                                             <hr>
                                             <div class="row">
                                                 <div class="col-xs-12 col-sm-6 col-md-3 b-r">
-                                                    <div class="col-12  label"><i class="fa fa-facebook"></i> Facebook</div>
+                                                    <div class="col-12  label"><i class="fa fa-facebook"></i> Facebook
+                                                    </div>
                                                     <div class="col-12 info">
-                                                        <a href="https://facebook.com/{{profile.facebook}}" target="_blank" rel="noopener noreferrer">
-                                                    {{profile.facebook}}
-                                                  </a>
+                                                        <a href="https://facebook.com/{{profile.facebook}}"
+                                                            target="_blank" rel="noopener noreferrer">
+                                                            {{profile.facebook}}
+                                                        </a>
                                                     </div>
                                                 </div>
                                                 <div class="col-xs-6 col-sm-6 col-md-3 b-r">
-                                                    <div class="col-12  label"><i class="fa fa-instagram"></i> Instagram</div>
+                                                    <div class="col-12  label"><i class="fa fa-instagram"></i> Instagram
+                                                    </div>
                                                     <div class="col-12  info">
-                                                        <a href="https://instagram.com/{{profile.instagram}}" target="_blank" rel="noopener noreferrer">
-                                                    {{profile.instagram}}
-                                                  </a>
+                                                        <a href="https://instagram.com/{{profile.instagram}}"
+                                                            target="_blank" rel="noopener noreferrer">
+                                                            {{profile.instagram}}
+                                                        </a>
                                                     </div>
                                                 </div>
                                                 <div class="col-xs-12 col-sm-6 col-md-3 b-r">
-                                                    <div class="col-12  label"><i class="fa fa-linkedin"></i> Linkedin</div>
+                                                    <div class="col-12  label"><i class="fa fa-linkedin"></i> Linkedin
+                                                    </div>
                                                     <div class="col-12  info">
-                                                        <a href="https://linkedin.com/{{profile.linkedin}}" target="_blank" rel="noopener noreferrer">
-                                                    {{profile.linkedin}}
-                                                  </a>
+                                                        <a href="https://linkedin.com/{{profile.linkedin}}"
+                                                            target="_blank" rel="noopener noreferrer">
+                                                            {{profile.linkedin}}
+                                                        </a>
                                                     </div>
                                                 </div>
                                                 <div class="col-xs-12 col-sm-6 col-md-3 b-r">
-                                                    <div class="col-12  label"><i class="fa fa-twitter"></i> Twitter</div>
+                                                    <div class="col-12  label"><i class="fa fa-twitter"></i> Twitter
+                                                    </div>
                                                     <div class="col-12  info">
-                                                        <a href="https://linkedin.com/{{profile.twitter}}" target="_blank" rel="noopener noreferrer">
-                                                    {{profile.twitter}}
-                                                  </a>
+                                                        <a href="https://linkedin.com/{{profile.twitter}}"
+                                                            target="_blank" rel="noopener noreferrer">
+                                                            {{profile.twitter}}
+                                                        </a>
                                                     </div>
                                                 </div>
 
                                             </div>
-                                            
+
                                         </div>
                                     </div>
                                     <div class="clear"></div>

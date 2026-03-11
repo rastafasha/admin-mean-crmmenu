@@ -7,7 +7,6 @@ import {HttpClientModule} from '@angular/common/http';
 import { LoginComponent } from './login/login.component';
 import { PasswordresetComponent } from './passwordreset/passwordreset.component';
 import { NewpasswordComponent } from './newpassword/newpassword.component';
-import { ComponentsModule } from '../components/components.module';
 
 @NgModule({
   declarations: [
@@ -26,7 +25,6 @@ import { ComponentsModule } from '../components/components.module';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    ComponentsModule
   ]
 })
 export class AuthModule { }

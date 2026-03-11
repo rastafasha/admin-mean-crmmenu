@@ -2,15 +2,12 @@ import { Component, OnInit, Input } from '@angular/core';
 
 //Services
 import { HttpBackend, HttpClient, HttpHandler } from '@angular/common/http';
-
 import { Location } from '@angular/common';
 import { User } from 'src/app/models/user';
 import { Category } from 'src/app/models/category';
 import { CategoryService } from 'src/app/services/category.service';
 import Swal from 'sweetalert2';
 import { BusquedasService } from 'src/app/services/busqueda.service';
-import { ProjectType } from 'src/app/models/project';
-import { ProjecttypeService } from 'src/app/services/projecttype.service';
 
 
 @Component({
@@ -30,7 +27,7 @@ export class CategoryIndexComponent implements OnInit {
   msm_error: string;
   loading = false;
 
-  query:string ='';
+  query: string = '';
 
   constructor(
     private location: Location,
@@ -41,12 +38,12 @@ export class CategoryIndexComponent implements OnInit {
 
   ) {
     this.http = new HttpClient(handler);
-   }
+  }
 
   ngOnInit(): void {
     this.getCurrencies();
     this.getUser();
-    window.scrollTo(0,0);
+    window.scrollTo(0, 0);
   }
 
   getUser(): void {
@@ -56,7 +53,7 @@ export class CategoryIndexComponent implements OnInit {
 
   getCurrencies(): void {
     this.categoryService.getCategories().subscribe(
-      res =>{
+      res => {
         this.categorias = res;
         console.log(res)
         error => this.error = error
@@ -64,7 +61,7 @@ export class CategoryIndexComponent implements OnInit {
     );
   }
 
-  eliminarCategory(_id:string){
+  eliminarCategory(_id: string) {
     Swal.fire({
       title: 'Estas Seguro?',
       text: "No podras recuperarlo!",
@@ -76,10 +73,10 @@ export class CategoryIndexComponent implements OnInit {
     }).then((result) => {
       if (result.isConfirmed) {
         this.categoryService.deleteCategory(_id).subscribe(
-          response =>{
+          response => {
             this.getCurrencies();
           }
-          );
+        );
         Swal.fire(
           'Borrado!',
           'El Archivo fue borrado.',
@@ -97,13 +94,13 @@ export class CategoryIndexComponent implements OnInit {
   }
 
   search() {
-    if(!this.query){
+    if (!this.query) {
       this.ngOnInit();
-    }else{
+    } else {
       return this.busquedasService.searchGlobal(this.query).subscribe(
-        (resp:any) => {
+        (resp: any) => {
           this.categorias = resp.categorias;
-          
+
         }
       )
     }

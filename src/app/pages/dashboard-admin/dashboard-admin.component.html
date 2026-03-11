@@ -18,28 +18,18 @@
                 <span class="badge bg-primary" *ngIf="user.role === 'ADMIN'">Admin</span>
             </div>
         </div>
-        <!-- <div *ngIf="user.role == 'SUPERADMIN'">
-            <app-graficas></app-graficas>
-        </div> -->
-        <!-- <div *ngIf="user.role == 'SUPERADMIN'|| user.role == 'ADMIN' || user.role == 'EDITOR'">
-            <app-chart></app-chart>
-        </div> -->
-        <!-- banners planes -->
-        <!-- banners planes -->
-
-
         <div class="clear"></div>
-
-        
         <div class="row mt-3">
-           <div class="d-flex justify-content-end gap-3">
-             <div class="btn btn-primary" (click)="openEditModal()" href="javascript:void(0)"  data-bs-toggle="modal" data-bs-target="#editProject">
-                <i class="fa fa-plus"></i> <i class="fa fa-folder-o"></i>
+            <div class="d-flex justify-content-end gap-3">
+                <div class="btn btn-primary" (click)="openEditModal()" href="javascript:void(0)" data-bs-toggle="modal"
+                    data-bs-target="#editProject">
+                    <i class="fa fa-plus"></i> <i class="fa fa-folder-o"></i>
+                </div>
+                <div class="btn btn-primary" href="javascript:void(0)" data-bs-toggle="modal"
+                    data-bs-target="#editProjectType">
+                    <i class="fa fa-plus"></i> <i class="fa fa-bookmark-o"></i>
+                </div>
             </div>
-            <div class="btn btn-primary" href="javascript:void(0)"  data-bs-toggle="modal" data-bs-target="#editProjectType">
-                <i class="fa fa-plus"></i> <i class="fa fa-bookmark-o"></i>
-            </div>
-           </div>
         </div>
         <div class="row mt-3">
             <div class="col-xs-12 col-sm-8">

@@ -4,7 +4,6 @@ import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { Location } from '@angular/common';
 import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user.service';
-import { ProjecttypeService } from 'src/app/services/projecttype.service';
 import { Category } from 'src/app/models/category';
 import { environment } from 'src/environments/environment';
 
@@ -20,14 +19,14 @@ export class CategoryEditComponent implements OnInit {
   @Input() displaycomponent: string = 'block';
   @Input() categories: Category;
 
-  title : string;
+  title: string;
   public categoryForm: FormGroup;
   public category: Category;
   public usuario: User;
   error: string;
-  isLoading:boolean=false;
+  isLoading: boolean = false;
 
-  idcategory:any;
+  idcategory: any;
 
   public msm_error = '';
 
@@ -46,32 +45,32 @@ export class CategoryEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe( ({id}) => this.cargarCategory(id));
+    this.activatedRoute.params.subscribe(({ id }) => this.cargarCategory(id));
     this.validarFormulario();
     this.getCategories();
-    window.scrollTo(0,0);
+    window.scrollTo(0, 0);
 
-    if(this.categorySeleccionado){
+    if (this.categorySeleccionado) {
       //actualizar
       this.title = 'Creando Categoría';
 
-    }else{
+    } else {
       //crear
       this.title = 'Editar Categoría';
     }
   }
 
-  validarFormulario(){
+  validarFormulario() {
     this.categoryForm = this.fb.group({
-      nombre: ['',Validators.required],
+      nombre: ['', Validators.required],
     })
   }
 
-  cargarCategory(_id: string){
+  cargarCategory(_id: string) {
     if (_id !== null && _id !== undefined) {
       this.title = 'Editando Categoría';
       this.categoriaService.getCategory(_id).subscribe(
-        (res:any) => {
+        (res: any) => {
           this.categoryForm.patchValue({
             id: res._id,
             nombre: res.nombre,
@@ -85,18 +84,18 @@ export class CategoryEditComponent implements OnInit {
 
   }
 
-  updateCategory(){
+  updateCategory() {
     this.isLoading = true;
-    const {nombre } = this.categoryForm.value;
+    const { nombre } = this.categoryForm.value;
 
-    if(this.categorySeleccionado){
+    if (this.categorySeleccionado) {
       //actualizar
       const data = {
         ...this.categoryForm.value,
         _id: this.categorySeleccionado._id
       }
       this.categoriaService.updateCategory(data).subscribe(
-        resp =>{
+        resp => {
           Swal.fire('Actualizado', `${nombre}  actualizado correctamente`, 'success');
           // this.router.navigateByUrl(`/dashboard/categories`);
           // console.log(this.categorySeleccionado);
@@ -104,16 +103,16 @@ export class CategoryEditComponent implements OnInit {
           this.isLoading = false;
         });
 
-    }else{
+    } else {
       //crear
       this.categoriaService.createCategory(this.categoryForm.value)
-      .subscribe( (resp: any) =>{
-        Swal.fire('Creado', `${nombre} creado correctamente`, 'success');
-        // this.router.navigateByUrl(`/dashboard/categories`);
-        // this.enviarNotificacion();
-        this.getCategories();
+        .subscribe((resp: any) => {
+          Swal.fire('Creado', `${nombre} creado correctamente`, 'success');
+          // this.router.navigateByUrl(`/dashboard/categories`);
+          // this.enviarNotificacion();
+          this.getCategories();
           this.isLoading = false;
-      })
+        })
     }
 
   }
@@ -128,38 +127,38 @@ export class CategoryEditComponent implements OnInit {
 
   getCategories(): void {
     this.categoriaService.getCategories().subscribe(
-      (res:any) =>{
+      (res: any) => {
         this.categories = res;
         error => this.error = error
       }
     );
   }
 
-  eliminarCategory(_id:string){
-      Swal.fire({
-        title: 'Estas Seguro?',
-        text: "No podras recuperarlo!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Si, Borrar!'
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.categoriaService.deleteCategory(_id).subscribe(
-            response =>{
-              this.getCategories();
-            }
-            );
-          Swal.fire(
-            'Borrado!',
-            'El Archivo fue borrado.',
-            'success'
-          )
-          this.getCategories();
-        }
-      });
-  
-    }
+  eliminarCategory(_id: string) {
+    Swal.fire({
+      title: 'Estas Seguro?',
+      text: "No podras recuperarlo!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, Borrar!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.categoriaService.deleteCategory(_id).subscribe(
+          response => {
+            this.getCategories();
+          }
+        );
+        Swal.fire(
+          'Borrado!',
+          'El Archivo fue borrado.',
+          'success'
+        )
+        this.getCategories();
+      }
+    });
+
+  }
 
 }

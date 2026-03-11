@@ -12,12 +12,9 @@ import { RolesViewComponent } from './roles/roles-view/roles-view.component';
 // paginacion
 import { NgxPaginationModule } from 'ngx-pagination';
 
-// angular file uploader
-// import { AngularFileUploaderModule } from 'angular-file-uploader';
 import { ConfiguracionesComponent } from './configuraciones/configuraciones.component';
 import { CategoryEditComponent } from './category/category-edit/category-edit.component';
 import { CategoryIndexComponent } from './category/category-index/category-index.component';
-import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 @NgModule({
   declarations: [
     ConfiguracionesComponent,
@@ -44,7 +41,6 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
     PipesModule,
     BrowserAnimationsModule,
     NgxPaginationModule,
-    CKEditorModule,
     // AngularFileUploaderModule
   ]
 })
