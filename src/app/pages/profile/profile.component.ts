@@ -86,7 +86,7 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit(): void {
     window.scrollTo(0,0);
-    // this.closeMenu();
+    this.closeMenu();
     this.getUser();
     this.getPaises();
     this.validarFormularioPerfil();

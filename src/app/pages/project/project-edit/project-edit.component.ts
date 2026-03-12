@@ -50,6 +50,8 @@ export class ProjectEditComponent implements OnInit, OnChanges {
   public FILE_AVATAR: any;
   public IMAGE_PREVISUALIZA: any = 'assets/img/user-06.jpg';
 
+  isLoading:boolean =false;
+
   constructor(
     private fb: FormBuilder,
     private usuarioService: UserService,
@@ -64,7 +66,7 @@ export class ProjectEditComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.validarFormulario();
     this.getCategorias();
-    // this.getPartners();
+    this.getPartners();
     this.getPaises();
   }
 
@@ -109,7 +111,7 @@ export class ProjectEditComponent implements OnInit, OnChanges {
 
   getPartners() {
     this.usuarioService.getAllEditors().subscribe((resp: any) => {
-      // console.log(resp);
+      console.log(resp);
       this.partners = resp;
       this.setPartnersFormArray([]);
     });
@@ -192,6 +194,13 @@ export class ProjectEditComponent implements OnInit, OnChanges {
 
 
   handleSubmit() {
+    if(!this.projectForm.valid){
+      //mostramos las alertas de los campos requeridos
+      this.projectForm.markAllAsTouched(); // Esto activa las validaciones visuales
+      return
+    }
+
+    this.isLoading =true;
     const { nombre } = this.projectForm.value;
 
     // const formData = new FormData();
@@ -232,6 +241,7 @@ export class ProjectEditComponent implements OnInit, OnChanges {
         _id: this.projectSeleccionado._id,
       };
       this.projectService.updateProject(data).subscribe((resp) => {
+        this.isLoading =false;
         Swal.fire(
           'Actualizado',
           `${nombre}  actualizado correctamente`,
@@ -252,6 +262,7 @@ export class ProjectEditComponent implements OnInit, OnChanges {
     } else {
       //crear
       this.projectService.createProject(dataToSend).subscribe((resp: any) => {
+        this.isLoading =false;
         Swal.fire('Creado', `${nombre} creado correctamente`, 'success');
         // Close modal programmatically
         const modalElement = document.getElementById('editProject');

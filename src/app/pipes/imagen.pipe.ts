@@ -17,7 +17,9 @@ export class ImagenPipe implements PipeTransform {
     } else if(img){
       return `${base_url}/${tipo}/${img}`;
     }else {
-      return `${base_url}/no-image.jpg`;
+      // return `${base_url}/no-image.jpg`;
+      return `./assets/images/no-image.jpg`;
+
     }
 
 

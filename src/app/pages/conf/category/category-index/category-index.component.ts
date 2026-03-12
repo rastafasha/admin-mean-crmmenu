@@ -44,6 +44,7 @@ export class CategoryIndexComponent implements OnInit {
     window.scrollTo(0, 0);
     this.getCategorias();
     this.getUser();
+    this.closeMenu();
   }
 
   getUser(): void {
@@ -62,6 +63,14 @@ export class CategoryIndexComponent implements OnInit {
   PageSize() {
     this.getCategorias();
 
+  }
+
+  closeMenu(){
+    var menuLateral = document.getElementsByClassName("sidebar");
+      for (var i = 0; i<menuLateral.length; i++) {
+         menuLateral[i].classList.remove("active");
+
+      }
   }
 
   eliminarCategory(_id: string) {

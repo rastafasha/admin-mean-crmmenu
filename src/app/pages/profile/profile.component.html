@@ -28,9 +28,7 @@
 
                     <div class="card">
                         <div class="card-body profile-card pt-4  fichasmall">
-                            <div *ngIf="!profileSeleccionado ">
-                                <img src="./assets/images/no-image.jpg" class="rounded-circle">
-                            </div>
+                            
                             <div *ngIf="profileSeleccionado ">
                                 <img [src]="profile.img | imagenPipe: 'profiles'" [alt]="user.username"
                                     class="rounded-circle">
@@ -156,24 +154,6 @@
                                                             <div class="col-11">
                                                                 <input type="text" class="form-control"
                                                                     formControlName="instagram"
-                                                                    placeholder="@nombredeusuario">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xs-12 col-md-6">
-                                                            <label for="twitter" class="col-xs-12 col-form-label">
-                                                                <i class="bi bi-twitter"></i> Twitter</label>
-                                                            <div class="col-11">
-                                                                <input type="text" class="form-control"
-                                                                    formControlName="twitter"
-                                                                    placeholder="@nombredeusuario">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-xs-12 col-md-6">
-                                                            <label for="linkedin" class="col-xs-12 col-form-label">
-                                                                <i class="bi bi-linkedin"></i> Linkedin</label>
-                                                            <div class="col-11">
-                                                                <input type="text" class="form-control"
-                                                                    formControlName="linkedin"
                                                                     placeholder="@nombredeusuario">
                                                             </div>
                                                         </div>

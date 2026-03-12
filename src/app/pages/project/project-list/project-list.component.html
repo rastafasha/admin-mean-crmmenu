@@ -64,8 +64,10 @@
 
                 <div class="card recent-sales overflow-auto" *ngIf="!loading">
                     <div class="card-body">
+                        <pagination-controls (pageChange)="p = $event"
+                            [style.display]="displaycomponent"></pagination-controls>
                         <div class="contenido">
-                            <div class="item " *ngFor="let project of projects | slice: 0: limit">
+                            <div class="item " *ngFor="let project of projects |  paginate: { itemsPerPage: count, currentPage: p }">
                                 <app-projectitem [project]="project" (onEditProject)="onEditProject($event)"
                                     (onDelete)="onDeleteProject($event)"></app-projectitem>
                             </div>
