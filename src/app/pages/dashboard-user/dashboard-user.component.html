@@ -125,7 +125,8 @@
 
             </div>
         </div>
-        <app-project-list [displaycomponent]="displaycomponent" [limit]="limit" [userprofile]="user"></app-project-list>
+        
+        <app-project-list *ngIf="user.role === 'PARTNER'"  [displaycomponent]="displaycomponent" [limit]="limit" [userprofile]="user"></app-project-list>
         
     </section>
 

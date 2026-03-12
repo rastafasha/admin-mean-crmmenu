@@ -44,8 +44,6 @@ export class DashboardUserComponent implements OnInit {
   getUser(): void {
     this.user = JSON.parse(localStorage.getItem('user'));
     this.uid = this.user.uid;
-    // this.getUserProfile();
-    console.log(this.user)
   }
 
   getUserProfile(){
