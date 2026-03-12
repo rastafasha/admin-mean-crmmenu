@@ -63,6 +63,10 @@ export class UsersComponent implements OnInit {
       }
     );
   }
+  PageSize() {
+    this.getUsers();
+
+  }
 
 
   eliminarUser(user:User){

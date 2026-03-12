@@ -53,7 +53,7 @@ export class LineChartComponent implements OnChanges {
       }
       const dataArray = grouped[projectName];
       // Use deliveryDate to get month index
-      const createdAt = project.dateVisita ? new Date(project.dateVisita) : null;
+      const createdAt = project.dateAprobado ? new Date(project.dateAprobado) : null;
       const monthIndex = createdAt ? createdAt.getMonth() : 0;
       dataArray[monthIndex] += 1; // Count projects per month
     });

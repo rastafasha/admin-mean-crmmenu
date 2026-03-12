@@ -43,6 +43,14 @@ export class ProjectService {
       )
   }
 
+  getProjectsByCategory(categoryName: string) {
+    const url = `${baseUrl}/projects/category/${categoryName}`;
+    return this.http.get<any>(url, this.headers)
+      .pipe(
+        map((resp: { ok: boolean, projects: Project[] }) => resp.projects)
+      )
+  }
+
   getProject(_id: string) {
     const url = `${baseUrl}/projects/${_id}`;
     return this.http.get<any>(url, this.headers)

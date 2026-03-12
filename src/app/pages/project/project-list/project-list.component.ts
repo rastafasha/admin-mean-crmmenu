@@ -124,9 +124,22 @@ export class ProjectListComponent implements OnInit {
   }
 
   search() {
-    if ((!this.query || this.query === null) && !this.selectedType) {
-      this.ngOnInit();
-    } else {
+    // Case 1: Only selectedType (category) is provided - use category filter
+    if (!this.query || this.query === null || this.query === '') {
+      if (this.selectedType) {
+        return this.projectService.getProjectsByCategory(this.selectedType).subscribe(
+          (resp: any) => {
+            this.projects = resp;
+            this.projectService.emitFilteredProjects(resp);
+          }
+        );
+      } else {
+        // No query and no category - reload all projects
+        this.ngOnInit();
+      }
+    } 
+    // Case 2: Query is provided (with or without category)
+    else {
       return this.busquedasService.searchGlobal(this.query).subscribe(
         (resp: any) => {
           let filteredProjects = resp.projects;
@@ -153,6 +166,10 @@ export class ProjectListComponent implements OnInit {
 
   }
   openEditModal(): void {
+    this.selectedProject = null;
+  }
+
+  onCloseModal(): void {
     this.selectedProject = null;
   }
 

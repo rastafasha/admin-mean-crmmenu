@@ -20,8 +20,8 @@ export class PieChart2Component implements OnChanges {
   
 
   updateChart() {
-    const paidCount = this.projects.filter(p => p.hasPresentation === true).length;
-    const debtCount = this.projects.filter(p => p.hasPresentation === false).length;
+    const paidCount = this.projects.filter(p => p.notificado === true).length;
+    const debtCount = this.projects.filter(p => p.notificado === false).length;
     const data = {
       labels: ['Con Presentación', 'Sin Presentación'],
       datasets: [

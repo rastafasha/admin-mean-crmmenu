@@ -41,24 +41,27 @@ export class CategoryIndexComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getCurrencies();
-    this.getUser();
     window.scrollTo(0, 0);
+    this.getCategorias();
+    this.getUser();
   }
 
   getUser(): void {
-
     this.user = JSON.parse(localStorage.getItem('user'));
   }
 
-  getCurrencies(): void {
+  getCategorias(): void {
     this.categoryService.getCategories().subscribe(
       res => {
         this.categorias = res;
-        console.log(res)
         error => this.error = error
       }
     );
+  }
+
+  PageSize() {
+    this.getCategorias();
+
   }
 
   eliminarCategory(_id: string) {
@@ -74,7 +77,7 @@ export class CategoryIndexComponent implements OnInit {
       if (result.isConfirmed) {
         this.categoryService.deleteCategory(_id).subscribe(
           response => {
-            this.getCurrencies();
+            this.getCategorias();
           }
         );
         Swal.fire(

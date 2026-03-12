@@ -98,5 +98,14 @@ export class DashboardAdminComponent implements OnInit {
   openEditModal(): void {
     this.selectedProject = null;
   }
+
+  onCloseModal(): void {
+    this.projectSeleccionado = null;
+  }
+
+  PageSize() {
+    this.getProjectsData();
+
+  }
   
 }

@@ -35,6 +35,7 @@ declare var bootstrap: any;
 export class ProjectEditComponent implements OnInit, OnChanges {
   @Input() projectSeleccionado;
   @Output() refreshProjectList: EventEmitter<void> = new EventEmitter<void>();
+  @Output() closeModal: EventEmitter<void> = new EventEmitter<void>();
 
   projectForm: FormGroup;
   title: string;
@@ -73,7 +74,7 @@ export class ProjectEditComponent implements OnInit, OnChanges {
       changes['projectSeleccionado'].currentValue
     ) {
       const project = changes['projectSeleccionado'].currentValue;
-      // this.setPartnersFormArray(project.partners);
+      this.setPartnersFormArray(project.partners);
       this.projectForm.patchValue({
         id: project._id,
         name: project.name,
@@ -85,11 +86,12 @@ export class ProjectEditComponent implements OnInit, OnChanges {
         hasVisited: project.hasVisited,
         hasMenu: project.hasMenu,
         dateVisita: project.dateVisita,
+        dateAprobado: project.dateAprobado,
         tipoMenu: project.tipoMenu,
         notificado: project.notificado,
         status: project.status,
       });
-      this.title = 'Editando Categoría';
+      this.title = 'Editando Proyecto';
     }
   }
 
@@ -105,24 +107,24 @@ export class ProjectEditComponent implements OnInit, OnChanges {
     });
   }
 
-  // getPartners() {
-  //   this.usuarioService.getAllEditors().subscribe((resp: any) => {
-  //     // console.log(resp);
-  //     this.partners = resp;
-  //     this.setPartnersFormArray([]);
-  //   });
-  // }
+  getPartners() {
+    this.usuarioService.getAllEditors().subscribe((resp: any) => {
+      // console.log(resp);
+      this.partners = resp;
+      this.setPartnersFormArray([]);
+    });
+  }
 
-  // setPartnersFormArray(selectedPartners: string[]) {
-  //   const partnersFormArray = this.fb.array([]);
-  //   if (this.partners && this.partners.length > 0) {
-  //     this.partners.forEach((partner) => {
-  //       const isSelected = selectedPartners.includes(partner.uid);
-  //       partnersFormArray.push(new FormControl(isSelected));
-  //     });
-  //   }
-  //   this.projectForm.setControl('partners', partnersFormArray);
-  // }
+  setPartnersFormArray(selectedPartners: string[]) {
+    const partnersFormArray = this.fb.array([]);
+    if (this.partners && this.partners.length > 0) {
+      this.partners.forEach((partner) => {
+        const isSelected = selectedPartners.includes(partner.uid);
+        partnersFormArray.push(new FormControl(isSelected));
+      });
+    }
+    this.projectForm.setControl('partners', partnersFormArray);
+  }
 
   validarFormulario() {
     this.projectForm = this.fb.group({
@@ -135,10 +137,11 @@ export class ProjectEditComponent implements OnInit, OnChanges {
       ubicacion: ['', Validators.required],
       pais: ['', Validators.required],
       dateVisita: [''],
+      dateAprobado: [''],
       status: [false ],
       hasVisited: [false],
       notificado: [false],
-      // partners: this.fb.array([], Validators.required),
+      partners: this.fb.array([], ),
       // img: [''],
       id: [''],
     });
@@ -146,7 +149,7 @@ export class ProjectEditComponent implements OnInit, OnChanges {
 
   cargarProject(_id: string) {
     if (_id !== null && _id !== undefined) {
-      this.title = 'Editando Categoría';
+      this.title = 'Editando Proyecto';
       this.projectService.getProject(_id).subscribe((res) => {
         this.projectForm.patchValue({
           id: res._id,
@@ -157,21 +160,35 @@ export class ProjectEditComponent implements OnInit, OnChanges {
           hasVisited: res.hasVisited,
           pais: res.pais._id,
           dateVisita: res.dateVisita,
+          dateAprobado: res.dateAprobado,
           status: res.status,
           hasMenu: res.hasMenu,
           ubicacion: res.ubicacion,
           tipoMenu: res.tipoMenu,
           notificado: res.notificado,
-          // partners: res.partners,
+          partners: res.partners,
         });
         this.projectSeleccionado = res;
       });
     } else {
-      this.title = 'Creando Categoría';
+      this.title = 'Creando Proyecto';
     }
   }
 
-
+  onClose(){
+    this.projectSeleccionado = null;
+    this.projectForm.reset();
+    this.title = 'Creando Proyecto';
+    // Also reset default values if needed
+    this.projectForm.patchValue({
+      status: false,
+      hasVisited: false,
+      hasMenu: false,
+      notificado: false
+    });
+    // Emit event to parent to reset the projectSeleccionado variable
+    this.closeModal.emit();
+  }
 
 
   handleSubmit() {
@@ -198,14 +215,14 @@ export class ProjectEditComponent implements OnInit, OnChanges {
     // }
 
     // Extract selected partner IDs from the FormArray
-    // const selectedPartners = this.projectForm.value.partners
-    //   .map((checked, i) => (checked ? this.partners[i].uid : null))
-    //   .filter((v) => v !== null);
+    const selectedPartners = this.projectForm.value.partners
+      .map((checked, i) => (checked ? this.partners[i].uid : null))
+      .filter((v) => v !== null);
 
     const dataToSend = {
       ...this.projectForm.value,
       // formData,
-      // partners: selectedPartners,
+      partners: selectedPartners,
     };
 
     if (this.projectSeleccionado) {
@@ -226,6 +243,7 @@ export class ProjectEditComponent implements OnInit, OnChanges {
         const modal = bootstrap.Modal.getInstance(modalElement);
         if (modal) {
           modal.hide();
+          
         }
         // Emit event to refresh project list
         this.refreshProjectList.emit();

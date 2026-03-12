@@ -14,6 +14,7 @@ export class Project {
     notificado: boolean;
     hasVisited: boolean;
     dateVisita: string;
+    dateAprobado: string;
     status: boolean;
     tipoMenu: string;
     hasMenu: boolean;

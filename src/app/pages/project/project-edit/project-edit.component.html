@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="projectModalLabel">{{title}}</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="onClose()"></button>
             </div>
             <div class="modal-body">
                 <div class="container">
@@ -92,7 +92,7 @@
                                     <input class="form-check-input" formControlName="status" type="checkbox"
                                         id="flexCheckstatus">
                                     <label class="form-check-label" for="flexCheckstatus">
-                                        ¿Fue Visitado?
+                                        ¿Aprobado Cliente?
                                     </label>
                                 </div>
                             </div>
@@ -103,8 +103,13 @@
                                 <input type="date" formControlName="dateVisita" class="form-control" required>
 
                             </div>
+                             <div class="col-xs-12 col-md-6">
+                                <label>Fecha Aprobaciǿn<span class="required">*</span></label>
+                                <input type="date" formControlName="dateAprobado" class="form-control" required>
 
-                            <!-- <div class="col-xs-12 col-md-6">
+                            </div>
+
+                            <div class="col-xs-12 col-md-6">
                                 <label>Asociados<span class="required">*</span></label>
                                 <div class="input-group">
 
@@ -119,7 +124,7 @@
                                     </ng-container>
 
                                 </div>
-                            </div> -->
+                            </div>
                              <!-- <div class="col-xs-12 col-md-6">
                                 <label>Subir PDF<span class="required">*</span></label>
                                 <input type="file" class="cz-file-drop-input"
@@ -143,7 +148,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="onClose()">Cerrar</button>
             </div>
         </div>
     </div>

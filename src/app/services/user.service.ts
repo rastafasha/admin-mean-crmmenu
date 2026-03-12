@@ -79,8 +79,7 @@ export class UserService {
 
       gapi.load('auth2', () =>{
         this.auth2 = gapi.auth2.init({
-          // client_id: userGoogle,
-          client_id: '291137676127-svvuuca518djs47q2v78se9q6iggi4nq.apps.googleusercontent.com',
+          client_id: userGoogle,
           cookiepolicy: 'single_host_origin',
         });
         resolve();
