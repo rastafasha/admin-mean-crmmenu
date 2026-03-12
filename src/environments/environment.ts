@@ -5,15 +5,14 @@
 export const environment = {
   production: false,
   //apirest local
-  apiUrl: "http://localhost:3000/api",
-  apiUrlMedia: "http://localhost:3000/api/uploads",
+  // apiUrl: "http://localhost:3000/api",
+  // apiUrlMedia: "http://localhost:3000/api/uploads",
 
   mediaUrlRemoto: 'https://res.cloudinary.com/dmv6aukai/image/upload/v1741275492/articlesApp/uploads',
-  // apiUrlMedia: 'https://https://backend-bidmaster-mean.vercel.app/api/uploads',
   
   //remoto
-  // apiUrl: "https://backend-bidmaster-mean.vercel.app/api",
-  // apiUrlMedia: "https://backend-bidmaster-mean.vercel.app/api/uploads/",
+  apiUrl: "https://backend-crmmenu-mean.onrender.com/api",
+  apiUrlMedia: "https://res.cloudinary.com/dmv6aukai/image/upload/v1741275492/articlesApp/uploads",
 
   clientId: '',
   clientGoogle: '291137676127-svvuuca518djs47q2v78se9q6iggi4nq.apps.googleusercontent.com',
