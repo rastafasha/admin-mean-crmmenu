@@ -57,7 +57,7 @@ export class LoginComponent implements OnInit {
   ) {}
 
 ngOnInit(){
-  this.renderButton();
+  // this.renderButton();
 
 }
 login(){
