@@ -1,6 +1,6 @@
 {
-  "name": "CRM Menu app",
-  "short_name": "CRM Menu app",
+  "name": "Zlipmenu CRM ",
+  "short_name": "Zlipmenu CRM",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",
