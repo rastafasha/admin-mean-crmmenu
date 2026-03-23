@@ -1,39 +1,40 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Category } from 'src/app/models/category';
-import { Project, ProjectType } from 'src/app/models/project';
+import { Cliente } from 'src/app/models/cliente';
 import { User } from 'src/app/models/user';
 import { BusquedasService } from 'src/app/services/busqueda.service';
 import { CategoryService } from 'src/app/services/category.service';
-import { ProjectService } from 'src/app/services/project.service';
+import { ClienteService } from 'src/app/services/cliente.service';
 import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-project-list',
-  templateUrl: './project-list.component.html',
-  styleUrls: ['./project-list.component.css']
+  selector: 'app-clientes-list',
+  templateUrl: './clientes-list.component.html',
+  styleUrls: ['./clientes-list.component.css']
 })
-export class ProjectListComponent implements OnInit {
+export class ClientesListComponent implements OnInit {
+
   @Input() displaycomponent: string = 'block';
   @Input() limit!: number;
   @Input() userprofile!: User;
 
   selectedType: string = '';
 
-  title: string = 'Proyectos';
-  projects: Project[];
+  title: string = 'Clientes';
+  clientes: Cliente[];
   query: string = '';
   p: number = 1;
   count: number = 5;
   loading: boolean = false;
   categories: Category[];
-  selectedProject: Project;
+  selectedClient: Cliente;
   usuario: any;
   usuario_id: any;
 
   constructor(
-    private projectService: ProjectService,
+    private clienteService: ClienteService,
     private busquedasService: BusquedasService,
     private categoriaService: CategoryService,
     private userService: UserService,
@@ -52,33 +53,33 @@ export class ProjectListComponent implements OnInit {
       this.usuario_id = resp.id;
       // this.cargarPresupuesto();
       if (this.usuario_id) {
-        this.getProjectsByUser(this.usuario_id);
+        this.getClientesByUser(this.usuario_id);
       }
     })
 
 
     if (this.usuario.role === 'PARTNER') {
       // this.usuario.uid = this.usuario_id;
-      this.getProjectsByUser(this.usuario.uid);
+      this.getClientesByUser(this.usuario.uid);
 
     } else {
-      this.getProjects();
+      this.getClients();
     }
 
   }
 
-  getProjects() {
+  getClients() {
     this.loading = true;
-    this.projectService.getProjects().subscribe((resp: any) => {
-      this.projects = resp;
+    this.clienteService.getClientes().subscribe((resp: any) => {
+      this.clientes = resp;
       this.loading = false;
     })
   }
 
-  getProjectsByUser(id: string) {
+  getClientesByUser(id: string) {
     this.loading = true;
-    this.projectService.getByUser(id).subscribe((resp: any) => {
-      this.projects = resp;
+    this.clienteService.getByUser(id).subscribe((resp: any) => {
+      this.clientes = resp;
       this.loading = false;
     })
   }
@@ -90,12 +91,12 @@ export class ProjectListComponent implements OnInit {
 
   }
 
-  onEditProject(project: Project) {
-    this.selectedProject = project;
+  onEditClient(cliente: Cliente) {
+    this.selectedClient = cliente;
   }
 
-  onDeleteProject(project: Project) {
-    this.selectedProject = project;
+  onDeleteClient(cliente: Cliente) {
+    this.selectedClient = cliente;
 
     Swal.fire({
       title: 'Estas Seguro?',
@@ -107,8 +108,8 @@ export class ProjectListComponent implements OnInit {
       confirmButtonText: 'Si, Borrar!'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.projectService.deleteProject(project._id).subscribe((resp: any) => {
-          this.getProjects();
+        this.clienteService.deleteCliente(cliente._id).subscribe((resp: any) => {
+          this.getClients();
         })
         Swal.fire(
           'Borrado!',
@@ -125,35 +126,34 @@ export class ProjectListComponent implements OnInit {
     // Case 1: Only selectedType (category) is provided - use category filter
     if (!this.query || this.query === null || this.query === '') {
       if (this.selectedType) {
-        return this.projectService.getProjectsByCategory(this.selectedType).subscribe(
+        return this.clienteService.getClientesByCategory(this.selectedType).subscribe(
           (resp: any) => {
-            this.projects = resp;
-            this.projectService.emitFilteredProjects(resp);
+            this.clientes = resp;
+            this.clienteService.emitFilteredClientes(resp);
           }
         );
       } else {
         // No query and no category - reload all projects
         this.ngOnInit();
       }
-    } 
+    }
     // Case 2: Query is provided (with or without category)
     else {
       return this.busquedasService.searchGlobal(this.query).subscribe(
         (resp: any) => {
-          let filteredProjects = resp.projects;
+          let filteredClientes = resp.clientes;
           if (this.selectedType) {
-            filteredProjects = filteredProjects.filter(
-              (project: Project) => project.category.nombre === this.selectedType
+            filteredClientes = filteredClientes.filter(
+              (cliente: Cliente) => cliente.category.nombre === this.selectedType
             );
           }
-          this.projects = filteredProjects;
-          this.projectService.emitFilteredProjects(filteredProjects);
+          this.clientes = filteredClientes;
+          this.clienteService.emitFilteredClientes(filteredClientes);
         }
       );
     }
   }
 
-  
 
   PageSize() {
     this.query = '';
@@ -162,12 +162,11 @@ export class ProjectListComponent implements OnInit {
 
   }
   openEditModal(): void {
-    this.selectedProject = null;
+    this.selectedClient = null;
   }
 
   onCloseModal(): void {
-    this.selectedProject = null;
+    this.selectedClient = null;
   }
 
 }
-

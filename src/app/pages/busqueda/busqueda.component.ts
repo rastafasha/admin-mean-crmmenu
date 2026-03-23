@@ -6,6 +6,7 @@ import { BusquedasService } from 'src/app/services/busqueda.service';
 
 import { Location } from '@angular/common';
 import { Project, ProjectType } from 'src/app/models/project';
+import { Cliente } from 'src/app/models/cliente';
 
 @Component({
   selector: 'app-busqueda',
@@ -19,6 +20,7 @@ export class BusquedaComponent implements OnInit {
   projects: Project;
   projecttypes: ProjectType;
   usuarios: User;
+  clientes: Cliente;
 
   query:string ='';
 
@@ -42,6 +44,7 @@ export class BusquedaComponent implements OnInit {
       (resp:any) => {
         this.usuarios = resp.usuarios;
         this.projects = resp.projects;
+        this.clientes = resp.clientes;
         this.projecttypes = resp.projecttypes;
       }
     )
@@ -56,6 +59,7 @@ export class BusquedaComponent implements OnInit {
         (resp:any) => {
           this.usuarios = resp.usuarios;
           this.projects = resp.projects;
+          this.clientes = resp.clientes;
           this.projecttypes = resp.projecttypes;
       
           console.log(resp);

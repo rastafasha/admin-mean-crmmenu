@@ -51,7 +51,7 @@ export class BusquedasService {
   }
   
 
-  buscar(tipo: 'usuarios' | 'projecttypes' | 'projects', termino: string) {
+  buscar(tipo: 'usuarios' | 'projecttypes' | 'projects'| 'clientes', termino: string) {
     const url = `${base_url}/todo/coleccion/${tipo}/${termino}`;
     return this.http.get<any[]>(url, this.headers).pipe(
       map((resp: any) => {
@@ -61,7 +61,9 @@ export class BusquedasService {
 
           case 'projecttypes':
             return this.trasnformarProjects(resp.resultados);
-          case 'projecttypes':
+          case 'projects':
+            return this.trasnformarCategorias(resp.resultados);
+          case 'clientes':
             return this.trasnformarCategorias(resp.resultados);
 
           default:

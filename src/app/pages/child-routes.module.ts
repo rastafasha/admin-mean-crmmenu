@@ -13,6 +13,8 @@ import { CategoryIndexComponent } from './conf/category/category-index/category-
 import { BusquedaComponent } from './busqueda/busqueda.component';
 import { ProjectListComponent } from './project/project-list/project-list.component';
 import { ProjectEditComponent } from './project/project-edit/project-edit.component';
+import { ClientesListComponent } from './cliente/clientes-list/clientes-list.component';
+import { ClienteEditComponent } from './cliente/cliente-edit/cliente-edit.component';
 // import { CondicionesComponent } from './condiciones/condiciones.component';
 
 
@@ -40,6 +42,11 @@ const childRoutes: Routes = [
     { path: 'projects/:id', component: ProjectListComponent, data:{title:'Proyecto'} },
     { path: 'project/crear', component: ProjectEditComponent, data:{title:'Crear Proyecto'} },
     { path: 'project/edit/:id', component: ProjectEditComponent, data:{title:'Editar Proyecto'} },
+    
+    { path: 'clientes', component: ClientesListComponent, data:{title:'Cliente'} },
+    { path: 'clientes/:id', component: ClientesListComponent, data:{title:'Cliente'} },
+    { path: 'cliente/crear', component: ClienteEditComponent, data:{title:'Crear Cliente'} },
+    { path: 'cliente/edit/:id', component: ClienteEditComponent, data:{title:'Editar Cliente'} },
 
   
     //user

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProjectEditComponent } from './project-edit/project-edit.component';
-import { ProjectListComponent } from './project-list/project-list.component';
+import { ClientesListComponent } from './clientes-list/clientes-list.component';
+import { ClienteEditComponent } from './cliente-edit/cliente-edit.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -16,12 +16,12 @@ import { ConfModule } from '../conf/conf.module';
 
 @NgModule({
   declarations: [
-    ProjectEditComponent,
-    ProjectListComponent
+    ClientesListComponent,
+    ClienteEditComponent
   ],
   exports: [
-    ProjectEditComponent,
-    ProjectListComponent
+    ClientesListComponent,
+    ClienteEditComponent
   ],
   imports: [
     CommonModule,
@@ -37,4 +37,4 @@ import { ConfModule } from '../conf/conf.module';
     // CKEditorModule,
   ]
 })
-export class ProjectModule { }
+export class ClienteModule { }

@@ -16,6 +16,8 @@ import { ProjectitemComponent } from './projectitem/projectitem.component';
 import { ProjecttypeeditComponent } from './projecttypeedit/projecttypeedit.component';
 import { ConfModule } from '../pages/conf/conf.module';
 import { SharedModule } from '../shared/shared.module';
+import { ClientitemComponent } from './clientitem/clientitem.component';
+import { BarChartComponent } from './charts/bar-chart/bar-chart.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { SharedModule } from '../shared/shared.module';
     LineChartComponent,
     PieChart2Component,
     ProjectitemComponent,
-    ProjecttypeeditComponent
+    ProjecttypeeditComponent,
+    ClientitemComponent,
+    BarChartComponent,
   ],
   exports: [
     UsuariosRecientesComponent,
@@ -34,7 +38,9 @@ import { SharedModule } from '../shared/shared.module';
     LineChartComponent,
     PieChart2Component,
     ProjectitemComponent,
-    ProjecttypeeditComponent
+    ProjecttypeeditComponent,
+    ClientitemComponent,
+    BarChartComponent
   ],
   imports: [
     CommonModule,
