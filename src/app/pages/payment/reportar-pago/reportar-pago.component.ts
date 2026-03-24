@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewChild, EventEmitter, Output, OnChanges, SimpleChanges } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CommonModule, Location } from '@angular/common';
-import { FormBuilder, FormControl, FormGroup, FormsModule, NgForm, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, FormsModule, NgForm, ReactiveFormsModule, ValidatorFn, ValidationErrors, Validators } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { Payment } from 'src/app/models/payment';
 import { PaymentService } from 'src/app/services/payment.service';
@@ -69,6 +69,14 @@ export class ReportarPagoComponent implements OnInit, OnChanges {
   }
 
 
+  minimumPartnersValidator(min: number): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (!control.value || !Array.isArray(control.value)) return null;
+      const selectedCount = control.value.filter((v: any) => !!v).length;
+      return selectedCount >= min ? null : { minimumPartners: { required: min, actual: selectedCount } };
+    };
+  }
+
   ngOnInit(): void {
     this.visible = false;
     this.validarFormulario();
@@ -99,7 +107,8 @@ export class ReportarPagoComponent implements OnInit, OnChanges {
         partnersFormArray.push(new FormControl(isSelected));
       });
     }
-    this.PaymentRegisterForm.setControl('partners', partnersFormArray);
+    const validatedArray = this.fb.array(partnersFormArray.value, this.minimumPartnersValidator(3));
+    this.PaymentRegisterForm.setControl('partners', validatedArray);
   }
 
 
@@ -139,6 +148,7 @@ export class ReportarPagoComponent implements OnInit, OnChanges {
   }
   validarFormulario() {
     this.PaymentRegisterForm = this.fb.group({
+      partners: this.fb.array([], this.minimumPartnersValidator(3)),
       id: [''],
       cliente: ['', Validators.required],
       amount: [0, [Validators.required, Validators.min(1)]], // Validar que sea número > 0
@@ -149,6 +159,7 @@ export class ReportarPagoComponent implements OnInit, OnChanges {
       fecha_verificacion: [new Date(), Validators.required],
       status: [false],
       // Campos ocultos o automáticos para la repartición
+      // partners: ['', Validators.required],
       vendedorId: ['', Validators.required],
       adminId: ['', Validators.required],
       ceoId: ['', Validators.required]

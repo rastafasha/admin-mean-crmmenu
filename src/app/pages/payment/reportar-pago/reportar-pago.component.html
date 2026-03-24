@@ -113,24 +113,20 @@
             <label>Asociados<span class="required">*</span></label>
             <div class="input-group">
 
-                <ng-container formArrayName="partners" *ngIf="partners && partners.length > 0">
-                    <div *ngFor="let partnerCtrl of partners; let i = index"
-                        class="form-check">
+                <div formArrayName="partners" *ngIf="partners && partners.length > 0">
+                    <div *ngFor="let partnerCtrl of partners; let i = index" class="form-check">
                         <input class="form-check-input" type="checkbox" [formControlName]="i"
-                            [id]="'partnerCheckbox' + i" [value]="partners[i].username" />
+                            [id]="'partnerCheckbox' + i" />
                         <label class="form-check-label" [for]="'partnerCheckbox' + i">
                             {{ partners[i].username }} | ({{ partners[i].role }})</label>
+                    </div>
+                </div>
 
-                            <div *ngIf="PaymentRegisterForm.get('partners')?.touched" class="text-danger">
-                        <div *ngIf="PaymentRegisterForm.get('partners')?.errors?.['required']">
-                            Campo Requerido
-                        </div>
-                        <div *ngIf="PaymentRegisterForm.get('partners')?.errors?.['minlength']">
-                            Mínimo 3 personas (SUPERADMIN, ADMIN, PARTNER)
-                        </div>
+                <div *ngIf="PaymentRegisterForm.get('partners')?.touched && PaymentRegisterForm.get('partners')?.invalid" class="text-danger mt-2">
+                    <div *ngIf="PaymentRegisterForm.get('partners')?.errors?.['minimumPartners']">
+                        Mínimo {{ PaymentRegisterForm.get('partners')?.errors?.['minimumPartners']?.required }} personas (SUPERADMIN, ADMIN, PARTNER). Seleccionados: {{ PaymentRegisterForm.get('partners')?.errors?.['minimumPartners']?.actual }}
                     </div>
-                    </div>
-                </ng-container>
+                </div>
 
             </div>
         </div>
