@@ -15,6 +15,9 @@ import { ProjectListComponent } from './project/project-list/project-list.compon
 import { ProjectEditComponent } from './project/project-edit/project-edit.component';
 import { ClientesListComponent } from './cliente/clientes-list/clientes-list.component';
 import { ClienteEditComponent } from './cliente/cliente-edit/cliente-edit.component';
+import { PaymentsComponent } from './payment/payments.component';
+import { PaymentDetailsComponent } from './payment/payment-details/payment-details.component';
+import { ReportarPagoComponent } from './payment/reportar-pago/reportar-pago.component';
 // import { CondicionesComponent } from './condiciones/condiciones.component';
 
 
@@ -47,6 +50,11 @@ const childRoutes: Routes = [
     { path: 'clientes/:id', component: ClientesListComponent, data:{title:'Cliente'} },
     { path: 'cliente/crear', component: ClienteEditComponent, data:{title:'Crear Cliente'} },
     { path: 'cliente/edit/:id', component: ClienteEditComponent, data:{title:'Editar Cliente'} },
+    
+    { path: 'payments', component: PaymentsComponent, data:{title:'Pago'} },
+    { path: 'payments/:id', component: PaymentDetailsComponent, data:{title:'Pago'} },
+    { path: 'payment/crear', component: ReportarPagoComponent, data:{title:'Crear Pago'} },
+    { path: 'payment/edit/:id', component: ReportarPagoComponent, data:{title:'Editar Pago'} },
 
   
     //user

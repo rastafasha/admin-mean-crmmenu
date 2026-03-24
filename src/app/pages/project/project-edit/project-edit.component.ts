@@ -149,33 +149,33 @@ export class ProjectEditComponent implements OnInit, OnChanges {
     });
   }
 
-  cargarProject(_id: string) {
-    if (_id !== null && _id !== undefined) {
-      this.title = 'Editando Proyecto';
-      this.projectService.getProject(_id).subscribe((res) => {
-        this.projectForm.patchValue({
-          id: res._id,
-          name: res.name,
-          url: res.url,
-          rrss: res.rrss,
-          category: res.category._id,
-          hasVisited: res.hasVisited,
-          pais: res.pais._id,
-          dateVisita: res.dateVisita,
-          dateAprobado: res.dateAprobado,
-          status: res.status,
-          hasMenu: res.hasMenu,
-          ubicacion: res.ubicacion,
-          tipoMenu: res.tipoMenu,
-          notificado: res.notificado,
-          partners: res.partners,
-        });
-        this.projectSeleccionado = res;
-      });
-    } else {
-      this.title = 'Creando Proyecto';
-    }
-  }
+  // cargarProject(_id: string) {
+  //   if (_id !== null && _id !== undefined) {
+  //     this.title = 'Editando Proyecto';
+  //     this.projectService.getProject(_id).subscribe((res) => {
+  //       this.projectForm.patchValue({
+  //         id: res._id,
+  //         name: res.name,
+  //         url: res.url,
+  //         rrss: res.rrss,
+  //         category: res.category._id,
+  //         hasVisited: res.hasVisited,
+  //         pais: res.pais._id,
+  //         dateVisita: res.dateVisita,
+  //         dateAprobado: res.dateAprobado,
+  //         status: res.status,
+  //         hasMenu: res.hasMenu,
+  //         ubicacion: res.ubicacion,
+  //         tipoMenu: res.tipoMenu,
+  //         notificado: res.notificado,
+  //         partners: res.partners,
+  //       });
+  //       this.projectSeleccionado = res;
+  //     });
+  //   } else {
+  //     this.title = 'Creando Proyecto';
+  //   }
+  // }
 
   onClose() {
     this.projectSeleccionado = null;

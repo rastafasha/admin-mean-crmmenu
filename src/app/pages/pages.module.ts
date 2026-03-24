@@ -29,6 +29,7 @@ import { UsersComponent } from './users/users.component';
 import { BusquedaComponent } from './busqueda/busqueda.component';
 import { ProjectModule } from './project/project.module';
 import { ClienteModule } from './cliente/cliente.module';
+import { PaymentsModule } from './payment/payments.module';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,8 @@ import { ClienteModule } from './cliente/cliente.module';
     ComponentsModule,
     NgxPaginationModule,
     ProjectModule,
-    ClienteModule
+    ClienteModule,
+    PaymentsModule
 
   ],
   providers: [

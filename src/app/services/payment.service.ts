@@ -1,0 +1,83 @@
+import { Injectable } from '@angular/core';
+import { Payment } from '../models/payment';
+import { HttpClient } from '@angular/common/http';
+import { map, Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
+const baseUrl = environment.apiUrl;
+
+@Injectable({
+  providedIn: 'root'
+})
+export class PaymentService {
+
+  public payment: Payment;
+
+
+  constructor(private http: HttpClient) { }
+
+  get token(): string {
+    return localStorage.getItem('token') || '';
+  }
+
+
+  get headers() {
+    return {
+      headers: {
+        'x-token': this.token
+      }
+    }
+  }
+
+
+  getPayments() {
+    const url = `${baseUrl}/payments`;
+    return this.http.get<any>(url, this.headers)
+      .pipe(
+        map((resp: { ok: boolean, payments: Payment }) => resp.payments)
+      )
+  }
+  getMontlyReport() {
+    const url = `${baseUrl}/payments/monthlyreport`;
+    return this.http.get<any>(url, this.headers)
+      .pipe(
+        map((resp: { ok: boolean, payments: Payment }) => resp.payments)
+      )
+  }
+
+  getPayment(_id: Payment) {
+    const url = `${baseUrl}/payments/${_id}`;
+    return this.http.get<any>(url, this.headers)
+      .pipe(
+        map((resp: { ok: boolean, payment: Payment }) => resp.payment)
+      );
+  }
+
+  getByUser(usuario: any) {
+    const url = `${baseUrl}/payments/user/${usuario}`;
+    return this.http.get<any>(url, this.headers)
+      .pipe(
+        map((resp: { ok: boolean, payment: Payment }) => resp.payment)
+      )
+  }
+
+
+  createPayment(payment: Payment) {
+    const url = `${baseUrl}/payments/store`;
+    return this.http.post(url, payment, this.headers);
+  }
+
+  updatePaymentStatus(payment: Payment) {
+    const url = `${baseUrl}/payments/updatestatus/${payment._id}`;
+    return this.http.put(url, payment, this.headers);
+  }
+
+  updatePayment(payment: any) {
+    const url = `${baseUrl}/payments/update/${payment._id}`;
+    return this.http.put(url, payment, this.headers);
+  }
+
+  deletePayment(_id: string) {
+    const url = `${baseUrl}/payments/delete/${_id}`;
+    return this.http.delete(url, this.headers);
+  }
+}

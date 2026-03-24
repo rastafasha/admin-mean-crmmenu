@@ -1,0 +1,74 @@
+<app-loading *ngIf="isLoading"></app-loading>
+<div class="container" *ngIf="!isLoading">
+    <form class="form-horizontal form-material formPagar" (submit)="handleSubmit()"
+        [formGroup]="PaymentRegisterForm">
+        <div class="row">
+            <div class="col-xs-12 col-md-8">
+                <div class="formcompr">
+                    <div class="div1">
+                        <div class="form-group">
+                            <label>Tipo De transferencia</label>
+                            <div class="form-check">
+                                <input class="form-check-input" formControlName="metodo" type="radio" value="Paypal" id="radiotipo1">
+                                <label class="form-check-label" for="radiotipo1">Paypal</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" formControlName="metodo" type="radio" value="Zelle" id="radiotipo2">
+                                <label class="form-check-label" for="radiotipo2">Zelle</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" formControlName="metodo" type="radio" value="Transferencia" id="radiotipo3">
+                                <label class="form-check-label" for="radiotipo3">Transferencia</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" formControlName="metodo" type="radio" value="Pago Movil" id="radiotipo4">
+                                <label class="form-check-label" for="radiotipo4">Pago Movil</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="div2">
+                        <div class="form-group">
+                            <label>Nombre Banco</label>
+                            <input type="text" formControlName="bank_name" class="form-control">
+                        </div>
+                    </div>
+                    <div class="div3">
+                        <div class="form-group">
+                            <label>Num. referencia</label>
+                            <input type="text" formControlName="referencia" class="form-control">
+                        </div>
+                    </div>
+                    <div class="div4">
+                        <div class="form-group">
+                            <label>Monto</label>
+                            <input type="text" formControlName="monto" class="form-control">
+                        </div>
+                    </div>
+                    <div class="div7">
+                        <div class="form-group">
+                            <label>Nombre y Apellido</label>
+                            <input type="text" formControlName="nombre" class="form-control">
+                        </div>
+                    </div>
+                    <div class="div8">
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="text" formControlName="email" class="form-control">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-md-4 imagenypaypal">
+                <div class="form-group">
+                    <p>Imagen del pago (requerido) <br> (peso max: 500kb)</p>
+                </div>
+                <div class="vibiblepayp">
+                    <!-- Image upload here -->
+                </div>
+            </div>
+        </div>
+        <div class="clear"></div>
+        <br>
+        <button class="btn btn-outline-success" type="submit">Registrar Pago</button>
+    </form>
+</div>
