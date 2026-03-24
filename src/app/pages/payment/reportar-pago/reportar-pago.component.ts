@@ -8,6 +8,8 @@ import { PaymentService } from 'src/app/services/payment.service';
 import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
+import { ClienteService } from 'src/app/services/cliente.service';
+import { Cliente } from 'src/app/models/cliente';
 
 interface HtmlInputEvent extends Event {
   target: HTMLInputElement & EventTarget;
@@ -23,7 +25,7 @@ declare var bootstrap: any;
   templateUrl: './reportar-pago.component.html',
   styleUrls: ['./reportar-pago.component.css']
 })
-export class ReportarPagoComponent implements OnInit, OnChanges  {
+export class ReportarPagoComponent implements OnInit, OnChanges {
 
   @Input() selectedPayment: Payment | null = null;
   @Output() refreshProjectList: EventEmitter<void> = new EventEmitter<void>();
@@ -52,16 +54,14 @@ export class ReportarPagoComponent implements OnInit, OnChanges  {
   user: User;
 
   public storage = environment.apiUrlMedia
-
+  clientes: Cliente;
 
 
   constructor(
     private fb: FormBuilder,
-    private location: Location,
     private paymentService: PaymentService,
     private usuarioService: UserService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
+    private clienteService: ClienteService,
   ) {
     this.usuario = usuarioService.usuario;
     const base_url = environment.apiUrl;
@@ -72,7 +72,14 @@ export class ReportarPagoComponent implements OnInit, OnChanges  {
     this.visible = false;
     this.validarFormulario();
     this.total = this.getTotal();
+    this.getClientes();
 
+    
+  }
+  getClientes(){
+    this.clienteService.getClientes().subscribe((resp:any)=>{
+      this.clientes = resp;
+    })
   }
 
 
@@ -86,62 +93,51 @@ export class ReportarPagoComponent implements OnInit, OnChanges  {
 
 
   ngOnChanges(changes: SimpleChanges): void {
-      if (
-        changes['selectedPayment'] &&
-        changes['selectedPayment'].currentValue
-      ) {
-        const payment = changes['selectedPayment'].currentValue;
-       
-        this.PaymentRegisterForm.patchValue({
-          id: payment._id,
-          metodo: payment.metodo,
-          bank_name: payment.bank_name,
-          cliente: payment.cliente,
-          monto: payment.monto,
-          referencia: payment.referencia,
-          pais: payment.pais._id,
-          hasVisited: payment.hasVisited,
-          hasMenu: payment.hasMenu,
-          dateVisita: payment.dateVisita,
-          dateAprobado: payment.dateAprobado,
-          tipoMenu: payment.tipoMenu,
-          notificado: payment.notificado,
-          status: payment.status,
-        });
-        this.title = 'Editando Pago';
-      }
+    if (
+      changes['selectedPayment'] &&
+      changes['selectedPayment'].currentValue
+    ) {
+      const payment = changes['selectedPayment'].currentValue;
+
+      this.PaymentRegisterForm.patchValue({
+        id: payment._id,
+        cliente: payment.cliente?._id || payment.cliente, // Por si viene populado
+        amount: payment.amount,
+        tipo_pago: payment.tipo_pago,
+        metodo_pago: payment.metodo_pago,
+        referencia: payment.referencia,
+        bank_destino: payment.bank_destino,
+        fecha_verificacion: payment.fecha_verificacion,
+        status: payment.status,
+        // Cargamos los IDs de la repartición guardada
+        vendedorId: payment.reparticion?.vendedor?.id,
+        adminId: payment.reparticion?.admin?.id,
+        ceoId: payment.reparticion?.ceo?.id
+      });
+      this.title = 'Editando Pago';
     }
+  }
   validarFormulario() {
     this.PaymentRegisterForm = this.fb.group({
       id: [''],
-      metodo: ['', Validators.required],
-      bank_name: [''],
-      monto: ['', Validators.required],
-      referencia: [''],
-      email: [''],
-      nombre: [''],
-      plan_id: [''],
-      // status: ['PENDING'],
-      // validacion: ['PENDING'],
-      metodo_id: ['1'],
-      user_id: [''],
-      image: [''],
+      cliente: ['', Validators.required],
+      amount: [0, [Validators.required, Validators.min(1)]], // Validar que sea número > 0
+      tipo_pago: ['', Validators.required],
+      referencia: ['', Validators.required],
+      metodo_pago: ['', Validators.required],
+      bank_destino: ['', Validators.required],
+      fecha_verificacion: [new Date(), Validators.required],
+      status: [false],
+      // Campos ocultos o automáticos para la repartición
+      vendedorId: ['', Validators.required],
+      adminId: ['', Validators.required],
+      ceoId: ['', Validators.required]
     })
   }
 
 
 
-  get image() {
-    return this.PaymentRegisterForm.get('image');
-  }
-
-  avatarUpload(datos) {
-    const data = JSON.parse(datos.response);
-    this.PaymentRegisterForm.controls['image'].setValue(data.image);//almaceno el nombre de la imagen
-  }
-
-
-  handleSubmit() {
+  handleSubmit() {debugger
 
     if (!this.PaymentRegisterForm.valid) {
       //mostramos las alertas de los campos requeridos
@@ -149,28 +145,23 @@ export class ReportarPagoComponent implements OnInit, OnChanges  {
       return
     }
     this.isLoading = true;
-    const formData = new FormData();
-    formData.append('metodo', this.PaymentRegisterForm.get('metodo').value);
-    formData.append('bank_name', this.PaymentRegisterForm.get('bank_name').value);
-    formData.append('monto', this.PaymentRegisterForm.get('monto').value);
-    formData.append('currency_id', this.PaymentRegisterForm.get('currency_id').value);
-    formData.append('referencia', this.PaymentRegisterForm.get('referencia').value);
-    formData.append('nombre', this.PaymentRegisterForm.get('nombre').value);
-    formData.append('email', this.PaymentRegisterForm.get('email').value);
-    formData.append('plan_id', this.PaymentRegisterForm.get('plan_id').value);
-    formData.append('metodo_id', '1');
-    // formData.append('status', 'PENDING');
-    // formData.append('validacion', 'PENDING');
-    formData.append('image', this.PaymentRegisterForm.get('image').value);
+    // Creamos un objeto JSON en lugar de FormData
+
+
+    const paymentData = {
+      ...this.PaymentRegisterForm.value,
+      // Aseguramos que sea número para que el 33.3% se calcule bien
+      amount: Number(this.PaymentRegisterForm.get('amount').value),
+      // Si usas el sistema de repartición, asegúrate de que estos IDs vayan en el objeto
+      vendedorId: this.PaymentRegisterForm.get('vendedorId').value,
+      adminId: this.PaymentRegisterForm.get('adminId').value,
+      ceoId: this.PaymentRegisterForm.get('ceoId').value
+    };
 
 
     if (this.selectedPayment) {
       //actualizar
-      const data = {
-        ...this.PaymentRegisterForm,
-        _id: this.selectedPayment._id,
-      };
-      this.paymentService.updatePayment(data).subscribe((resp) => {
+      this.paymentService.updatePayment(paymentData).subscribe((resp) => {
         this.isLoading = false;
         Swal.fire(
           'Actualizado',
@@ -191,15 +182,12 @@ export class ReportarPagoComponent implements OnInit, OnChanges  {
     } else {
 
       //crear
-      const data = {
-        ...this.PaymentRegisterForm.value,
-        user_id: this.usuario.id
-      }
-      this.paymentService.createPayment(data)
+
+      this.paymentService.createPayment(paymentData)
         .subscribe((resp: any) => {
           Swal.fire('Creado', `creado correctamente`, 'success');
 
-  const modalElement = document.getElementById('reportarPagoModal');
+          const modalElement = document.getElementById('reportarPagoModal');
           const modal = bootstrap.Modal.getInstance(modalElement);
           if (modal) {
             modal.hide();
