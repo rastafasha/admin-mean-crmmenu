@@ -71,10 +71,10 @@ export class PaymentService {
     return this.http.put(url, payment, this.headers);
   }
 
-  updatePayment(payment: any) {
-    const url = `${baseUrl}/payments/update/${payment._id}`;
-    return this.http.put(url, payment, this.headers);
-  }
+  updatePayment(id: string, data: any) {
+    const url = `${baseUrl}/payments/update/${id}`;
+    return this.http.put(url, data, this.headers);
+}
 
   deletePayment(_id: string) {
     const url = `${baseUrl}/payments/delete/${_id}`;

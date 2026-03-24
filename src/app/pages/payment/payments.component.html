@@ -59,7 +59,8 @@
                                 <th scope="col">Monto Total</th>
                                 <th scope="col">Desglose (33%)</th> <!-- Nueva columna clave -->
                                 <th scope="col">Status</th>
-                                <th scope="col">Fecha</th>
+                                <th scope="col">creada</th>
+                                <th scope="col">Actualizada</th>
                                 <th scope="col">Acciones</th>
                             </tr>
                         </thead>
@@ -72,8 +73,7 @@
                                 </th>
                                 <td>
                                     <div class="d-flex flex-column">
-                                        <span class="fw-bold">{{pago.cliente?.nombre}}</span>
-                                        <small class="text-muted">{{pago.cliente?.email}}</small>
+                                        <span class="fw-bold">{{pago.cliente?.name}}</span>
                                     </div>
                                 </td>
                                 <td>
@@ -102,6 +102,7 @@
                                 </td>
 
                                 <td>{{pago.createdAt | date:'dd/MM/yyyy HH:mm'}}</td>
+                                <td>{{pago.updatedAt | date:'dd/MM/yyyy HH:mm'}}</td>
 
                                 <td>
                                     <div class="d-flex align-items-center">

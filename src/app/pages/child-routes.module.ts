@@ -55,6 +55,7 @@ const childRoutes: Routes = [
     { path: 'payments/:id', component: PaymentDetailsComponent, data:{title:'Pago'} },
     { path: 'payment/crear', component: ReportarPagoComponent, data:{title:'Crear Pago'} },
     { path: 'payment/edit/:id', component: ReportarPagoComponent, data:{title:'Editar Pago'} },
+    { path: 'payment-detail/:id', component: PaymentDetailsComponent, data:{title:'Revisar Pago'} },
 
   
     //user

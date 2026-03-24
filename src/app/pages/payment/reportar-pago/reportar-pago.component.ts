@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewChild, EventEmitter, Output, OnChanges, SimpleChanges } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CommonModule, Location } from '@angular/common';
-import { FormBuilder, FormGroup, FormsModule, NgForm, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, FormsModule, NgForm, ReactiveFormsModule, Validators } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { Payment } from 'src/app/models/payment';
 import { PaymentService } from 'src/app/services/payment.service';
@@ -52,6 +52,7 @@ export class ReportarPagoComponent implements OnInit, OnChanges {
   imagePath: string;
 
   user: User;
+  partners: User[];
 
   public storage = environment.apiUrlMedia
   clientes: Cliente;
@@ -73,13 +74,32 @@ export class ReportarPagoComponent implements OnInit, OnChanges {
     this.validarFormulario();
     this.total = this.getTotal();
     this.getClientes();
+    this.getPartners();
 
-    
   }
-  getClientes(){
-    this.clienteService.getClientes().subscribe((resp:any)=>{
+  getClientes() {
+    this.clienteService.getClientes().subscribe((resp: any) => {
       this.clientes = resp;
     })
+  }
+
+  getPartners() {
+    this.usuarioService.cargarUsuarios().subscribe((resp: any) => {
+      this.partners = resp.usuarios;
+      console.log(this.partners)
+      this.setPartnersFormArray([]);
+    });
+  }
+
+  setPartnersFormArray(selectedPartners: string[]) {
+    const partnersFormArray = this.fb.array([]);
+    if (this.partners && this.partners.length > 0) {
+      this.partners.forEach((partner) => {
+        const isSelected = selectedPartners.includes(partner.uid);
+        partnersFormArray.push(new FormControl(isSelected));
+      });
+    }
+    this.PaymentRegisterForm.setControl('partners', partnersFormArray);
   }
 
 
@@ -98,7 +118,7 @@ export class ReportarPagoComponent implements OnInit, OnChanges {
       changes['selectedPayment'].currentValue
     ) {
       const payment = changes['selectedPayment'].currentValue;
-
+      this.setPartnersFormArray(payment.partners);
       this.PaymentRegisterForm.patchValue({
         id: payment._id,
         cliente: payment.cliente?._id || payment.cliente, // Por si viene populado
@@ -137,31 +157,44 @@ export class ReportarPagoComponent implements OnInit, OnChanges {
 
 
 
-  handleSubmit() {debugger
+  handleSubmit() {
 
     if (!this.PaymentRegisterForm.valid) {
       //mostramos las alertas de los campos requeridos
       this.PaymentRegisterForm.markAllAsTouched(); // Esto activa las validaciones visuales
       return
     }
-    this.isLoading = true;
-    // Creamos un objeto JSON en lugar de FormData
 
+    // 1. Convertimos los booleanos [true, false...] en objetos de usuario reales
+    const usuariosSeleccionados = this.PaymentRegisterForm.value.partners
+      .map((checked: boolean, i: number) => checked ? this.partners[i] : null)
+      .filter((u: any) => u !== null);
 
-    const paymentData = {
+    // 2. Buscamos quién cumple cada rol dentro de los seleccionados
+    const vendedor = usuariosSeleccionados.find(u => u.role === 'PARTNER');
+    const administrador = usuariosSeleccionados.find(u => u.role === 'ADMIN');
+    const ceo = usuariosSeleccionados.find(u => u.role === 'SUPERADMIN');
+
+    // 3. Construimos el objeto FINAL que espera el Backend
+    const dataToBackend = {
+      // Traemos todo lo del formulario
       ...this.PaymentRegisterForm.value,
-      // Aseguramos que sea número para que el 33.3% se calcule bien
+      // Sobrescribimos con los valores procesados y limpios
       amount: Number(this.PaymentRegisterForm.get('amount').value),
-      // Si usas el sistema de repartición, asegúrate de que estos IDs vayan en el objeto
-      vendedorId: this.PaymentRegisterForm.get('vendedorId').value,
-      adminId: this.PaymentRegisterForm.get('adminId').value,
-      ceoId: this.PaymentRegisterForm.get('ceoId').value
+      vendedorId: vendedor ? vendedor.uid : null,
+      adminId: administrador ? administrador.uid : null,
+      ceoId: ceo ? ceo.uid : null,
+      // Limpiamos el campo partners para que no envíe [true, false]
+      partners: usuariosSeleccionados.map(u => u.uid),
     };
+
+    // DEBUG: Revisa esto en la consola para confirmar que ahora sí van los IDs
+    console.log('Datos listos para enviar:', dataToBackend);
 
 
     if (this.selectedPayment) {
       //actualizar
-      this.paymentService.updatePayment(paymentData).subscribe((resp) => {
+      this.paymentService.updatePayment(this.selectedPayment._id, dataToBackend).subscribe((resp) => {
         this.isLoading = false;
         Swal.fire(
           'Actualizado',
@@ -183,7 +216,7 @@ export class ReportarPagoComponent implements OnInit, OnChanges {
 
       //crear
 
-      this.paymentService.createPayment(paymentData)
+      this.paymentService.createPayment(dataToBackend)
         .subscribe((resp: any) => {
           Swal.fire('Creado', `creado correctamente`, 'success');
 

@@ -49,7 +49,7 @@ export class PaymentsComponent implements OnInit {
   getPagos(): void {
     this.isLoading = true;
     this.paymentService.getPayments().subscribe((res: any) => {
-      this.payments = res.data;
+      this.payments = res;
       (error) => (this.error = error);
       this.isLoading = false;
       // console.log(this.payments);

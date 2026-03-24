@@ -1,5 +1,6 @@
 import { environment } from "src/environments/environment";
 import { User } from "./user";
+import { Pais } from "./pais.model";
 const base_url = environment.mediaUrlRemoto;
 export class Profile {
 
@@ -9,7 +10,7 @@ export class Profile {
     public first_name: string,
     public last_name: string,
     public direccion: string,
-    public pais: string,
+    public pais: Pais,
     public estado: string,
     public ciudad: string,
     public telhome: string,

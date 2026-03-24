@@ -4,8 +4,6 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Payment } from 'src/app/models/payment';
 import { PaymentService } from 'src/app/services/payment.service';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ImagenPipe } from 'src/app/pipes/imagen.pipe';
 import Swal from 'sweetalert2';
 @Component({
   selector: 'app-payment-details',
