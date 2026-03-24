@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Chart } from 'chart.js/auto';
 import { PaymentService } from 'src/app/services/payment.service';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-bar-chart',
@@ -97,7 +95,7 @@ export class BarChartComponent implements OnInit {
         data: {
           labels: ['Vendedores', 'Admins', 'CEOs', 'Total General'],
           datasets: [{
-            label: 'Montos Acumulados ($)',
+            label: 'Montos Acumulados (€)',
             data: [
               Number(this.reportData.totalVendedores) || 0,
               Number(this.reportData.totalAdmins) || 0,
