@@ -94,7 +94,7 @@ export class ReportarPagoComponent implements OnInit, OnChanges {
   getPartners() {
     this.usuarioService.cargarUsuarios().subscribe((resp: any) => {
       this.partners = resp.usuarios;
-      console.log(this.partners)
+      // console.log(this.partners)
       this.setPartnersFormArray([]);
     });
   }

@@ -1,95 +1,126 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Chart } from 'chart.js/auto';
+import { PaymentService } from 'src/app/services/payment.service';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-bar-chart',
   templateUrl: './bar-chart.component.html',
   styleUrls: ['./bar-chart.component.css']
 })
-export class BarChartComponent implements OnChanges {
+export class BarChartComponent implements OnInit {
   public chart: Chart;
-  @Input() payments: any;
+  monthlyData: any[] = [];
+  selectedYear: number;
+  selectedMonth: number = 1; // Default Enero (1-based)
+  years: number[] = [];
+  months = [
+    'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+    'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+  ];
+  isLoading = false;
 
-  ngOnChanges(changes: SimpleChanges) {
-    if (changes['payments'] && this.payments) {
-      this.createChart();
+  // Crea una variable para el reporte
+  reportData: any = null;
+
+  constructor(private paymentService: PaymentService) {
+    this.selectedYear = new Date().getFullYear();
+  }
+
+  ngOnInit(): void {
+    this.generateYears();
+    this.loadData();
+  }
+
+  generateYears(): void {
+    const currentYear = new Date().getFullYear();
+    this.years = [];
+    for (let year = currentYear - 4; year <= currentYear; year++) {
+      this.years.push(year);
     }
   }
 
-  private createChart() {
-    const labels = [
-      'Enero',
-      'Febrero',
-      'Marzo',
-      'Abril',
-      'Mayo',
-      'Junio',
-      'Julio',
-      'Agosto',
-      'Septiembre',
-      'Octubre',
-      'Noviembre',
-      'Diciembre',
-    ];
+  loadData(): void {
+    this.isLoading = true;
+    this.paymentService.getMontlyReport(this.selectedMonth, this.selectedYear).subscribe({
+      next: (resp: any) => {
+        // Si el backend responde que no hay pagos, reportData debe ser null
+        if (resp.ok && resp.report && resp.report.cantidadPagos > 0) {
+          this.reportData = resp.report;
+        } else {
+          this.reportData = null;
+        }
 
-    // Initialize arrays for monto and monto_pendiente per month
-    const montoData = new Array(12).fill(0);
-    const montoPendienteData = new Array(12).fill(0);
-
-    // Aggregate monto and monto_pendiente by month
-    this.payments.forEach(payment => {
-      if (payment.created_at) {
-        const date = new Date(payment.created_at);
-        const month = date.getMonth(); // 0-based month index
-        montoData[month] += Number(payment.monto) || 0;
-        montoPendienteData[month] += Number(payment.monto_pendiente) || 0;
+        this.createChart(); // Se llama siempre para destruir el viejo o pintar el nuevo
+        this.isLoading = false;
+      },
+      error: (error) => {
+        this.reportData = null;
+        this.isLoading = false;
       }
     });
+  }
 
-    const data = {
-      labels: labels,
-      datasets: [
-        {
-          label: 'Pagados',
-          data: montoData,
-          backgroundColor: 'rgba(75, 192, 192, 0.6)',
-          borderColor: 'rgba(75, 192, 192, 1)',
-          borderWidth: 1
-        },
-        {
-          label: 'Pendientes',
-          data: montoPendienteData,
-          backgroundColor: 'rgba(255, 99, 132, 0.2)',
-          borderColor: 'rgba(255, 99, 132, 1)',
-          borderWidth: 1
-        }
-      ]
-    };
+  onYearChange(year: number): void {
+    this.selectedYear = year;
+    this.loadData();
+  }
 
+  onMonthChange(month: number): void {
+    this.selectedMonth = month;
+    this.loadData();
+  }
+
+  private createChart(): void {
+    // 1. Limpiar gráfico previo si existe
     if (this.chart) {
       this.chart.destroy();
     }
 
-    this.chart = new Chart('barChart', {
-      type: 'bar',
-      data: data,
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true,
-          },
+    // 2. Si no hay datos, no hacemos nada
+    if (!this.reportData || this.reportData.cantidadPagos === 0) {
+      return;
+    }
+
+    // 3. Esperar a que Angular termine de renderizar el HTML
+    setTimeout(() => {
+      const el = document.getElementById('barChart') as HTMLCanvasElement;
+
+      if (!el) {
+        console.error("No se encontró el canvas 'barChart'");
+        return;
+      }
+
+      this.chart = new Chart(el, {
+        type: 'bar',
+        data: {
+          labels: ['Vendedores', 'Admins', 'CEOs', 'Total General'],
+          datasets: [{
+            label: 'Montos Acumulados ($)',
+            data: [
+              Number(this.reportData.totalVendedores) || 0,
+              Number(this.reportData.totalAdmins) || 0,
+              Number(this.reportData.totalCEOs) || 0,
+              Number(this.reportData.granTotal) || 0
+            ],
+            backgroundColor: [
+              'rgba(75, 192, 192, 0.7)',
+              'rgba(54, 162, 235, 0.7)',
+              'rgba(255, 206, 86, 0.7)',
+              'rgba(153, 102, 255, 0.7)'
+            ],
+            borderWidth: 1
+          }]
         },
-        responsive: true,
-        plugins: {
-          legend: {
-            position: 'top',
-          },
-          title: {
-            display: true,
-            text: 'Comportamiento del Año'
+        options: {
+          responsive: true,
+          maintainAspectRatio: false, // Importante para que llene el contenedor
+          scales: {
+            y: { beginAtZero: true }
           }
-        },
-      },
-    });
+        }
+      });
+    }, 100); // 100ms es suficiente para que el DOM esté listo
   }
 }

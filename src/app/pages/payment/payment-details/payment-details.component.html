@@ -1,6 +1,9 @@
 <!-- =======| Main |======= -->
 <div class="container animated fadeInUp" id="main" class="main" role="main" name="profile">
 
+    <app-backButtn [displaycomponent]="displaycomponent" [title]="title"></app-backButtn>
+    <div class="clear"></div>
+    
     <app-loading *ngIf="isLoading"></app-loading>
     <div class="row animated fadeInUp" *ngIf="!isLoading">
         <section class="section dashboard">
@@ -15,12 +18,12 @@
                    
                     <p><b>Cliente:</b> {{payment.cliente.name}}</p>
                     <p><b>Monto pagado:</b> {{payment.amount| currency}}</p>
-                    <p><b>Vendedor:</b> {{payment.reparticion.vendedor.id}} | {{payment.reparticion.vendedor.monto| currency}}</p>
+                    <!-- <p><b>Vendedor:</b> {{payment.reparticion.vendedor.id}} | {{payment.reparticion.vendedor.monto| currency}}</p>
                     <p><b>Admin:</b> {{payment.reparticion.admin.id}} | {{payment.reparticion.admin.monto| currency}}</p>
-                    <p><b>CEO:</b> {{payment.reparticion.ceo.id}} | {{payment.reparticion.ceo.monto| currency}}</p>
-                    <!-- <p><b>Vendedor:</b> {{payment.reparticion.vendedor.id.username}} | {{payment.reparticion.vendedor.monto| currency}}</p>
-                    <p><b>Admin:</b> {{payment.reparticion.admin.id.username}} | {{payment.reparticion.admin.monto| currency}}</p>
-                    <p><b>CEO:</b> {{payment.reparticion.ceo.id.username}} | {{payment.reparticion.ceo.monto| currency}}</p> -->
+                    <p><b>CEO:</b> {{payment.reparticion.ceo.id}} | {{payment.reparticion.ceo.monto| currency}}</p> -->
+                    <p><b>Vendedor:</b> {{payment?.reparticion?.vendedor?.id?.username}} | {{payment.reparticion.vendedor.monto| currency:'EUR'}}</p>
+                    <p><b>Admin:</b> {{payment?.reparticion?.admin?.id?.username}} | {{payment.reparticion.admin.monto| currency:'EUR'}}</p>
+                    <p><b>CEO:</b> {{payment?.reparticion?.ceo?.id?.username}} | {{payment.reparticion.ceo.monto| currency:'EUR'}}</p>
                     <p><b>Banco destino:</b> {{payment.bank_destino}}</p>
                     <p><b>Metodo de Pago:</b> {{payment.metodo_pago}}</p>
                     <p><b>Tipo de Pago:</b> {{payment.tipo_pago}}</p>

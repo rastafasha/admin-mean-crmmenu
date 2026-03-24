@@ -16,6 +16,9 @@ export class PaymentsComponent implements OnInit {
 
   @Input() displaycomponent: string = 'block';
 
+  option_selectedd: number = 1;
+  solicitud_selectedd: any = 1;
+
   selectedPayment: Payment;
   title = 'Pagos';
 
@@ -146,4 +149,15 @@ export class PaymentsComponent implements OnInit {
       });
   
     }
+
+    optionSelected(value: number) {
+    this.option_selectedd = value;
+    if (this.option_selectedd === 1) {
+
+      // this.ngOnInit();
+    }
+    if (this.option_selectedd === 2) {
+      this.solicitud_selectedd = null;
+    }
+  }
 }

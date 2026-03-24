@@ -36,12 +36,16 @@ export class PaymentService {
         map((resp: { ok: boolean, payments: Payment }) => resp.payments)
       )
   }
-  getMontlyReport() {
-    const url = `${baseUrl}/payments/monthlyreport`;
-    return this.http.get<any>(url, this.headers)
-      .pipe(
-        map((resp: { ok: boolean, payments: Payment }) => resp.payments)
-      )
+  getMontlyReport( month?: number, year?: number) {
+    let url = `${baseUrl}/payments/monthlyreport`;
+    if (month !== undefined) {
+      url += `?month=${month.toString().padStart(2, '0')}`;
+    }
+    if (year !== undefined) {
+      const connector = url.includes('?') ? '&' : '?';
+      url += `${connector}year=${year}`;
+    }
+    return this.http.get(url, this.headers);
   }
 
   getPayment(_id: Payment) {

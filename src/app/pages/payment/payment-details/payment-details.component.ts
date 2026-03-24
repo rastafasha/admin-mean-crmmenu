@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule, Location } from '@angular/common';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -11,7 +11,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./payment-details.component.css']
 })
 export class PaymentDetailsComponent implements OnInit {
-
+@Input() displaycomponent: string = 'block';
   title = "Detalle Pago";
   payment: Payment;
   error: string;
