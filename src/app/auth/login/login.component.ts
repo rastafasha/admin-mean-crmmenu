@@ -139,6 +139,7 @@ crearUsuario(){
 
       window.location.reload();
     },(error) => {
+      this.isLoading=false;
       Swal.fire('Error', error.error.msg, 'error');
       this.errors = error.error;
     }
