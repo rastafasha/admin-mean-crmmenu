@@ -13,9 +13,12 @@
                 </nav>
             </div>
             <div class="right shadow animated fadeIn">
-                <p>Bienvenido: </p>
+                <p>Bienvenido: {{user.username}}!</p>
+                
                 <span class="badge bg-dark" *ngIf="user.role === 'SUPERADMIN'">SuperAdmin</span>
                 <span class="badge bg-primary" *ngIf="user.role === 'ADMIN'">Admin</span>
+                <span class="badge bg-primary" *ngIf="user.role === 'PARTNER'">Partner de Cuentas</span>
+                <p>Ten un Excelente y Productivo día!</p>
             </div>
         </div>
         <div class="clear"></div>
