@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
     password: ['', Validators.required],
     confirmPassword: ['', Validators.required],
     roles: ['USER'],
-    terminos: [false, Validators.required],
+    terminos: [true, Validators.required],
 
   }, {
     validators: this.passwordsIguales('password', 'confirmPassword')
