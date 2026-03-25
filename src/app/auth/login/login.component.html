@@ -3,8 +3,8 @@
         <input type="checkbox" id="chk" aria-hidden="true">
         <img src="./assets/svg/logo-zlipmenu_logotipo.svg" alt="">
         <div class="signup">
-
-            <form [formGroup]="loginForm" id="loginform" (ngSubmit)="login()" autocapitalize="off">
+            <app-loading *ngIf="isLoading"></app-loading>
+            <form *ngIf="!isLoading" [formGroup]="loginForm" id="loginform" (ngSubmit)="login()" autocapitalize="off">
                 <label for="chk" aria-hidden="true"><h1>Login</h1></label>
                 <div class="form-group ">
                     <div class="col-xs-12">
@@ -45,7 +45,7 @@
         </div>
 
         <div class="login">
-            <form [formGroup]="registerForm" (ngSubmit)="crearUsuario()" autocapitalize="off" style="margin-top: 10px;">
+            <form  *ngIf="!isLoading"[formGroup]="registerForm" (ngSubmit)="crearUsuario()" autocapitalize="off" style="margin-top: 10px;">
                 <label for="chk" aria-hidden="true"><h1>Registro</h1></label>
 
                 <div class="form-group ">

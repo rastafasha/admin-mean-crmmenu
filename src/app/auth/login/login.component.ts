@@ -20,6 +20,7 @@ export class LoginComponent implements OnInit {
   roles: string[] = [];
 
   public auth2: any;
+  isLoading:boolean = false;
 
   user: User;
 
@@ -61,7 +62,7 @@ ngOnInit(){
 
 }
 login(){
-
+  this.isLoading=true;
   this.usuarioService.login(this.loginForm.value).subscribe(
     resp =>{
       if(this.loginForm.get('remember').value){
@@ -69,6 +70,7 @@ login(){
       }else{
         localStorage.removeItem('email');
       }
+       this.isLoading=false;
       this.router.navigateByUrl('/dashboard');
     },(err) => {
       Swal.fire('Error', err.error.msg, 'error');
@@ -129,10 +131,13 @@ attachSignin(element) {
 // Registro
 crearUsuario(){
   this.formSumitted = true;
+   this.isLoading=true;
   this.usuarioService.crearUsuario(this.registerForm.value).subscribe(
     resp =>{
+       this.isLoading=false;
       Swal.fire('Registrado!', `Ya puedes ingresar`, 'success');
-      this.ngOnInit();
+
+      window.location.reload();
     },(error) => {
       Swal.fire('Error', error.error.msg, 'error');
       this.errors = error.error;
