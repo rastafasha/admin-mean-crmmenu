@@ -4,9 +4,10 @@ import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
-  selector: 'app-menuiconos',
-  templateUrl: './menuiconos.component.html',
-  styleUrls: ['./menuiconos.component.css']
+    selector: 'app-menuiconos',
+    templateUrl: './menuiconos.component.html',
+    styleUrls: ['./menuiconos.component.css'],
+    standalone: false
 })
 export class MenuiconosComponent implements OnInit {
 

@@ -10,9 +10,10 @@ declare const gapi: any;
 
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: [ './login.component.css' ]
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.css'],
+    standalone: false
 })
 export class LoginComponent implements OnInit {
 
@@ -24,28 +25,11 @@ export class LoginComponent implements OnInit {
 
   user: User;
 
-  public loginForm = this.fb.group({
-    email: [ localStorage.getItem('email') || '', [Validators.required, Validators.email] ],
-    password: ['', Validators.required],
-    remember: [false]
-
-  });
-
+  public loginForm!: FormGroup;
   // Registro
   public formSumitted = false;
 
-  public registerForm = this.fb.group({
-    username: ['', Validators.required],
-    email: [ '', [Validators.required] ],
-    password: ['', Validators.required],
-    confirmPassword: ['', Validators.required],
-    roles: ['USER'],
-    terminos: [true, Validators.required],
-
-  }, {
-    validators: this.passwordsIguales('password', 'confirmPassword')
-
-  });
+  public registerForm!: FormGroup;
   // Registro
 
 
@@ -55,7 +39,27 @@ export class LoginComponent implements OnInit {
     private fb: FormBuilder,
     private usuarioService: UserService,
     private ngZone: NgZone
-  ) {}
+  ) {
+    this.loginForm = this.fb.group({
+      email: [ localStorage.getItem('email') || '', [Validators.required, Validators.email] ],
+      password: ['', Validators.required],
+      remember: [false]
+
+    });
+
+    this.registerForm = this.fb.group({
+      username: ['', Validators.required],
+      email: [ '', [Validators.required] ],
+      password: ['', Validators.required],
+      confirmPassword: ['', Validators.required],
+      roles: ['USER'],
+      terminos: [true, Validators.required],
+
+    }, {
+      validators: this.passwordsIguales('password', 'confirmPassword')
+
+    });
+  }
 
 ngOnInit(){
   // this.renderButton();

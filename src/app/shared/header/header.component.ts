@@ -45,7 +45,9 @@ export class HeaderComponent implements OnInit {
 
     this.getUser();
     // this.getUserServer();
-    
+    if (localStorage.getItem('dark')) {
+      this.darkmode('dark');
+    }
 
   }
 

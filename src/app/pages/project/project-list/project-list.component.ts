@@ -10,9 +10,10 @@ import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-project-list',
-  templateUrl: './project-list.component.html',
-  styleUrls: ['./project-list.component.css']
+    selector: 'app-project-list',
+    templateUrl: './project-list.component.html',
+    styleUrls: ['./project-list.component.css'],
+    standalone: false
 })
 export class ProjectListComponent implements OnInit {
   @Input() displaycomponent: string = 'block';

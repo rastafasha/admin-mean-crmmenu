@@ -2,9 +2,10 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Cliente } from 'src/app/models/cliente';
 
 @Component({
-  selector: 'app-clientitem',
-  templateUrl: './clientitem.component.html',
-  styleUrls: ['./clientitem.component.css']
+    selector: 'app-clientitem',
+    templateUrl: './clientitem.component.html',
+    styleUrls: ['./clientitem.component.css'],
+    standalone: false
 })
 export class ClientitemComponent implements OnInit {
 

@@ -2,9 +2,10 @@ import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import Chart from 'chart.js/auto';
 
 @Component({
-  selector: 'app-pie-chart2',
-  templateUrl: './pie-chart2.component.html',
-  styleUrls: ['./pie-chart2.component.css']
+    selector: 'app-pie-chart2',
+    templateUrl: './pie-chart2.component.html',
+    styleUrls: ['./pie-chart2.component.css'],
+    standalone: false
 })
 export class PieChart2Component implements OnChanges {
   public chart: Chart;

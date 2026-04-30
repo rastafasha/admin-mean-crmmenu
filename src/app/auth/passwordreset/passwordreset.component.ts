@@ -4,9 +4,10 @@ import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
 @Component({
-  selector: 'app-passwordreset',
-  templateUrl: './passwordreset.component.html',
-  styleUrls: ['./passwordreset.component.css']
+    selector: 'app-passwordreset',
+    templateUrl: './passwordreset.component.html',
+    styleUrls: ['./passwordreset.component.css'],
+    standalone: false
 })
 export class PasswordresetComponent implements OnInit {
   email = new FormControl();
@@ -15,17 +16,19 @@ export class PasswordresetComponent implements OnInit {
   errors:any = null;
 
   public formSumitted = false;
-  public resetpaswordForm = this.fb.group({
-    email: [ null, [Validators.required] ],
-    // terminos: [false, Validators.required],
-
-  });
+  public resetpaswordForm!: FormGroup;
 
   constructor(
     private fb: FormBuilder,
     private userService: UserService,
     private router: Router,
-  ) { }
+  ) {
+    this.resetpaswordForm = this.fb.group({
+      email: [ null, [Validators.required] ],
+      // terminos: [false, Validators.required],
+
+    });
+  }
 
   ngOnInit(): void {
 

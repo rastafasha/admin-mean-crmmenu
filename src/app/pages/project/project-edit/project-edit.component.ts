@@ -28,9 +28,10 @@ import Swal from 'sweetalert2';
 declare var bootstrap: any;
 
 @Component({
-  selector: 'app-project-edit',
-  templateUrl: './project-edit.component.html',
-  styleUrls: ['./project-edit.component.css'],
+    selector: 'app-project-edit',
+    templateUrl: './project-edit.component.html',
+    styleUrls: ['./project-edit.component.css'],
+    standalone: false
 })
 export class ProjectEditComponent implements OnInit, OnChanges {
   @Input() projectSeleccionado;

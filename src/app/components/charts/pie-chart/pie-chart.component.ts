@@ -2,9 +2,10 @@ import { Component } from '@angular/core';
 import { single } from './data';
 import { GraficoService } from 'src/app/services/grafico.service';
 @Component({
-  selector: 'app-pie-chart',
-  templateUrl: './pie-chart.component.html',
-  styleUrls: ['./pie-chart.component.scss']
+    selector: 'app-pie-chart',
+    templateUrl: './pie-chart.component.html',
+    styleUrls: ['./pie-chart.component.scss'],
+    standalone: false
 })
 export class PieChartComponent {
   //  single: any[];

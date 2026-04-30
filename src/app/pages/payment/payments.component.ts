@@ -7,10 +7,10 @@ import Swal from 'sweetalert2';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
-  selector: 'app-payments',
-
-  templateUrl: './payments.component.html',
-  styleUrls: ['./payments.component.css'],
+    selector: 'app-payments',
+    templateUrl: './payments.component.html',
+    styleUrls: ['./payments.component.css'],
+    standalone: false
 })
 export class PaymentsComponent implements OnInit {
 

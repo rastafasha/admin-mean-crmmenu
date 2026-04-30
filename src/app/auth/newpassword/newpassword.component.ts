@@ -4,9 +4,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
 @Component({
-  selector: 'app-newpassword',
-  templateUrl: './newpassword.component.html',
-  styleUrls: ['./newpassword.component.css']
+    selector: 'app-newpassword',
+    templateUrl: './newpassword.component.html',
+    styleUrls: ['./newpassword.component.css'],
+    standalone: false
 })
 export class NewpasswordComponent implements OnInit {
   password = new FormControl();
@@ -20,22 +21,23 @@ export class NewpasswordComponent implements OnInit {
 
   public formSumitted = false;
 
-  public passwordForm = this.fb.group({
-    email: [ null, [Validators.required] ],
-    password: [null, Validators.required],
-    password2: [null, Validators.required],
-    resetToken: [null],
-
-  }, {
-    validators: this.passwordsIguales('password', 'password2')
-
-  });
+  public passwordForm!: FormGroup;
   constructor(
     private router: Router,
     private activatedRouter: ActivatedRoute,
     private fb: FormBuilder,
     private userService: UserService,
   ) {
+    this.passwordForm = this.fb.group({
+      email: [ null, [Validators.required] ],
+      password: [null, Validators.required],
+      password2: [null, Validators.required],
+      resetToken: [null],
+
+    }, {
+      validators: this.passwordsIguales('password', 'password2')
+
+    });
     activatedRouter.queryParams.subscribe(params=>{
       this.resetToken = params['auth_token'];
     })

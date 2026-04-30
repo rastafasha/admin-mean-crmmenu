@@ -21,9 +21,10 @@ declare var $: any;
 declare var bootstrap: any;
 
 @Component({
-  selector: 'app-reportar-pago',
-  templateUrl: './reportar-pago.component.html',
-  styleUrls: ['./reportar-pago.component.css']
+    selector: 'app-reportar-pago',
+    templateUrl: './reportar-pago.component.html',
+    styleUrls: ['./reportar-pago.component.css'],
+    standalone: false
 })
 export class ReportarPagoComponent implements OnInit, OnChanges {
 

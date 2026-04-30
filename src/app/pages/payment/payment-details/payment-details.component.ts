@@ -6,9 +6,10 @@ import { Payment } from 'src/app/models/payment';
 import { PaymentService } from 'src/app/services/payment.service';
 import Swal from 'sweetalert2';
 @Component({
-  selector: 'app-payment-details',
-  templateUrl: './payment-details.component.html',
-  styleUrls: ['./payment-details.component.css']
+    selector: 'app-payment-details',
+    templateUrl: './payment-details.component.html',
+    styleUrls: ['./payment-details.component.css'],
+    standalone: false
 })
 export class PaymentDetailsComponent implements OnInit {
 @Input() displaycomponent: string = 'block';

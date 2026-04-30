@@ -3,7 +3,8 @@ import {  Location } from '@angular/common';
 @Component({
     selector: 'app-backButtn',
     templateUrl: './backButtn.component.html',
-    styleUrls: ['./backButtn.component.css']
+    styleUrls: ['./backButtn.component.css'],
+    standalone: false
 })
 export class BackButtnComponent {
     // private _location = Inject(Location)

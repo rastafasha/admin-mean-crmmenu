@@ -7,9 +7,10 @@ import { ProjectService } from 'src/app/services/project.service';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
-  selector: 'app-dashboard-admin',
-  templateUrl: './dashboard-admin.component.html',
-  styleUrls: ['./dashboard-admin.component.css']
+    selector: 'app-dashboard-admin',
+    templateUrl: './dashboard-admin.component.html',
+    styleUrls: ['./dashboard-admin.component.css'],
+    standalone: false
 })
 export class DashboardAdminComponent implements OnInit {
   @Input() projects: Project[] = [];

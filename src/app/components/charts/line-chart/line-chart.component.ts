@@ -3,9 +3,10 @@ import { Chart } from 'chart.js/auto';
 import { Project } from '../../../models/project';
 
 @Component({
-  selector: 'app-line-chart',
-  templateUrl: './line-chart.component.html',
-  styleUrls: ['./line-chart.component.css'],
+    selector: 'app-line-chart',
+    templateUrl: './line-chart.component.html',
+    styleUrls: ['./line-chart.component.css'],
+    standalone: false
 })
 export class LineChartComponent implements OnChanges {
   @Input() projects: Project[] = [];
