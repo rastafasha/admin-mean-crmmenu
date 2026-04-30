@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProjectEditComponent } from './project-edit/project-edit.component';
 import { ProjectListComponent } from './project-list/project-list.component';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
@@ -14,27 +14,20 @@ import { ConfModule } from '../conf/conf.module';
 
 
 
-@NgModule({
-  declarations: [
-    ProjectEditComponent,
-    ProjectListComponent
-  ],
-  exports: [
-    ProjectEditComponent,
-    ProjectListComponent
-  ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    ReactiveFormsModule,
-    FormsModule,
-    RouterModule,
-    HttpClientModule,
-    PipesModule,
-    ConfModule,
-    ComponentsModule,
-    NgxPaginationModule,
-    // CKEditorModule,
-  ]
-})
+@NgModule({ declarations: [
+        ProjectEditComponent,
+        ProjectListComponent
+    ],
+    exports: [
+        ProjectEditComponent,
+        ProjectListComponent
+    ], imports: [CommonModule,
+        SharedModule,
+        ReactiveFormsModule,
+        FormsModule,
+        RouterModule,
+        PipesModule,
+        ConfModule,
+        ComponentsModule,
+        NgxPaginationModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class ProjectModule { }

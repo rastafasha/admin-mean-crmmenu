@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 //helpers
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { NgxPaginationModule } from 'ngx-pagination';
 
 import {PagesComponent} from './pages.component';
@@ -31,46 +31,39 @@ import { ProjectModule } from './project/project.module';
 import { ClienteModule } from './cliente/cliente.module';
 import { PaymentsModule } from './payment/payments.module';
 
-@NgModule({
-  declarations: [
-    DashboardComponent,
-    DashboardAdminComponent,
-    PagesComponent,
-    ProfileComponent,
-    UsersComponent,
-    DashboardUserComponent,
-    PagesComponent,
-    UserProfileComponent,
-    BusquedaComponent
-  ],
-  exports: [
-    DashboardComponent,
-    DashboardAdminComponent,
-    PagesComponent,
-    ProfileComponent,
-    UsersComponent,
-    DashboardUserComponent,
-    PagesComponent,
-    UserProfileComponent,
-    BusquedaComponent
-  ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    ReactiveFormsModule,
-    FormsModule,
-    RouterModule,
-    HttpClientModule,
-    PipesModule,
-    ConfModule,
-    ComponentsModule,
-    NgxPaginationModule,
-    ProjectModule,
-    ClienteModule,
-    PaymentsModule
-
-  ],
-  providers: [
-  ],
-})
+@NgModule({ declarations: [
+        DashboardComponent,
+        DashboardAdminComponent,
+        PagesComponent,
+        ProfileComponent,
+        UsersComponent,
+        DashboardUserComponent,
+        PagesComponent,
+        UserProfileComponent,
+        BusquedaComponent
+    ],
+    exports: [
+        DashboardComponent,
+        DashboardAdminComponent,
+        PagesComponent,
+        ProfileComponent,
+        UsersComponent,
+        DashboardUserComponent,
+        PagesComponent,
+        UserProfileComponent,
+        BusquedaComponent
+    ], imports: [CommonModule,
+        SharedModule,
+        ReactiveFormsModule,
+        FormsModule,
+        RouterModule,
+        PipesModule,
+        ConfModule,
+        ComponentsModule,
+        NgxPaginationModule,
+        ProjectModule,
+        ClienteModule,
+        PaymentsModule], providers: [
+        provideHttpClient(withInterceptorsFromDi())
+    ] })
 export class PagesModule { }

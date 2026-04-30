@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterModule } from '@angular/router';
@@ -14,28 +14,22 @@ import { ReportarPagoComponent } from './reportar-pago/reportar-pago.component';
 
 
 
-@NgModule({
-  declarations: [
-    PaymentDetailsComponent,
-    PaymentsComponent,
-    ReportarPagoComponent
-  ],
-  exports: [
-    PaymentDetailsComponent,
-    PaymentsComponent,
-    ReportarPagoComponent
-  ],
-  imports: [
-    CommonModule,
-    HttpClientModule,
-    FormsModule,
-    ReactiveFormsModule,
-    RouterModule,
-    BrowserAnimationsModule,
-    NgxPaginationModule,
-    SharedModule,
-    PipesModule,
-    ComponentsModule
-  ]
-})
+@NgModule({ declarations: [
+        PaymentDetailsComponent,
+        PaymentsComponent,
+        ReportarPagoComponent
+    ],
+    exports: [
+        PaymentDetailsComponent,
+        PaymentsComponent,
+        ReportarPagoComponent
+    ], imports: [CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        RouterModule,
+        BrowserAnimationsModule,
+        NgxPaginationModule,
+        SharedModule,
+        PipesModule,
+        ComponentsModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class PaymentsModule { }

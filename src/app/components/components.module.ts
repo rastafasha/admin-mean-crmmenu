@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 // Import Angular plugin.
 import { NgxPaginationModule } from 'ngx-pagination';
 
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { UsuariosRecientesComponent } from './usuarios-recientes/usuarios-recientes.component';
 import {PipesModule} from '../pipes/pipes.module';
 import { EditoresComponent } from './editores/editores.component';
@@ -19,39 +19,33 @@ import { SharedModule } from '../shared/shared.module';
 import { ClientitemComponent } from './clientitem/clientitem.component';
 import { BarChartComponent } from './charts/bar-chart/bar-chart.component';
 
-@NgModule({
-  declarations: [
-    UsuariosRecientesComponent,
-    EditoresComponent,
-    ModalCondicionesComponent,
-    LineChartComponent,
-    PieChart2Component,
-    ProjectitemComponent,
-    ProjecttypeeditComponent,
-    ClientitemComponent,
-    BarChartComponent,
-  ],
-  exports: [
-    UsuariosRecientesComponent,
-    EditoresComponent,
-    ModalCondicionesComponent,
-    LineChartComponent,
-    PieChart2Component,
-    ProjectitemComponent,
-    ProjecttypeeditComponent,
-    ClientitemComponent,
-    BarChartComponent
-  ],
-  imports: [
-    CommonModule,
-    RouterModule,
-    ReactiveFormsModule,
-    FormsModule,
-    HttpClientModule,
-    PipesModule,
-    NgxPaginationModule,
-    ConfModule,
-    SharedModule
-  ]
-})
+@NgModule({ declarations: [
+        UsuariosRecientesComponent,
+        EditoresComponent,
+        ModalCondicionesComponent,
+        LineChartComponent,
+        PieChart2Component,
+        ProjectitemComponent,
+        ProjecttypeeditComponent,
+        ClientitemComponent,
+        BarChartComponent,
+    ],
+    exports: [
+        UsuariosRecientesComponent,
+        EditoresComponent,
+        ModalCondicionesComponent,
+        LineChartComponent,
+        PieChart2Component,
+        ProjectitemComponent,
+        ProjecttypeeditComponent,
+        ClientitemComponent,
+        BarChartComponent
+    ], imports: [CommonModule,
+        RouterModule,
+        ReactiveFormsModule,
+        FormsModule,
+        PipesModule,
+        NgxPaginationModule,
+        ConfModule,
+        SharedModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class ComponentsModule { }
