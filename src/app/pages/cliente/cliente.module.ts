@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ClientesListComponent } from './clientes-list/clientes-list.component';
 import { ClienteEditComponent } from './cliente-edit/cliente-edit.component';
-import { HttpClientModule } from '@angular/common/http';
+import { provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
@@ -14,27 +14,20 @@ import { ConfModule } from '../conf/conf.module';
 
 
 
-@NgModule({
-  declarations: [
-    ClientesListComponent,
-    ClienteEditComponent
-  ],
-  exports: [
-    ClientesListComponent,
-    ClienteEditComponent
-  ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    ReactiveFormsModule,
-    FormsModule,
-    RouterModule,
-    HttpClientModule,
-    PipesModule,
-    ConfModule,
-    ComponentsModule,
-    NgxPaginationModule,
-    // CKEditorModule,
-  ]
-})
+@NgModule({ declarations: [
+        ClientesListComponent,
+        ClienteEditComponent
+    ],
+    exports: [
+        ClientesListComponent,
+        ClienteEditComponent
+    ], imports: [CommonModule,
+        SharedModule,
+        ReactiveFormsModule,
+        FormsModule,
+        RouterModule,
+        PipesModule,
+        ConfModule,
+        ComponentsModule,
+        NgxPaginationModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class ClienteModule { }

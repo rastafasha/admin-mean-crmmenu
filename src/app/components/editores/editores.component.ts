@@ -7,9 +7,10 @@ import { ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-editores',
-  templateUrl: './editores.component.html',
-  styleUrls: ['./editores.component.css']
+    selector: 'app-editores',
+    templateUrl: './editores.component.html',
+    styleUrls: ['./editores.component.css'],
+    standalone: false
 })
 export class EditoresComponent implements OnInit {
 

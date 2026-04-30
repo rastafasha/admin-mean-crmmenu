@@ -13,9 +13,10 @@ import Swal from 'sweetalert2';
 declare var bootstrap: any;
 
 @Component({
-  selector: 'app-cliente-edit',
-  templateUrl: './cliente-edit.component.html',
-  styleUrls: ['./cliente-edit.component.css']
+    selector: 'app-cliente-edit',
+    templateUrl: './cliente-edit.component.html',
+    styleUrls: ['./cliente-edit.component.css'],
+    standalone: false
 })
 export class ClienteEditComponent implements OnInit, OnChanges {
 

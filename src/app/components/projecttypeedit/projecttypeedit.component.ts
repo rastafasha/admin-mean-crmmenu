@@ -3,9 +3,10 @@ import { FormGroup } from '@angular/forms';
 import { Category } from 'src/app/models/category';
 
 @Component({
-  selector: 'app-projecttypeedit',
-  templateUrl: './projecttypeedit.component.html',
-  styleUrls: ['./projecttypeedit.component.css']
+    selector: 'app-projecttypeedit',
+    templateUrl: './projecttypeedit.component.html',
+    styleUrls: ['./projecttypeedit.component.css'],
+    standalone: false
 })
 export class ProjecttypeeditComponent implements OnInit {
 

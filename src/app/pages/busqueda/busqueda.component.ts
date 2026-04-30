@@ -9,9 +9,10 @@ import { Project, ProjectType } from 'src/app/models/project';
 import { Cliente } from 'src/app/models/cliente';
 
 @Component({
-  selector: 'app-busqueda',
-  templateUrl: './busqueda.component.html',
-  styleUrls: ['./busqueda.component.css']
+    selector: 'app-busqueda',
+    templateUrl: './busqueda.component.html',
+    styleUrls: ['./busqueda.component.css'],
+    standalone: false
 })
 export class BusquedaComponent implements OnInit {
 

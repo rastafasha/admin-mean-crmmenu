@@ -3,9 +3,10 @@ import { Chart } from 'chart.js/auto';
 import { PaymentService } from 'src/app/services/payment.service';
 
 @Component({
-  selector: 'app-bar-chart',
-  templateUrl: './bar-chart.component.html',
-  styleUrls: ['./bar-chart.component.css']
+    selector: 'app-bar-chart',
+    templateUrl: './bar-chart.component.html',
+    styleUrls: ['./bar-chart.component.css'],
+    standalone: false
 })
 export class BarChartComponent implements OnInit {
   public chart: Chart;

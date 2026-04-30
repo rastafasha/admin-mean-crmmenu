@@ -4,9 +4,10 @@ import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
 @Component({
-  selector: 'app-dashboard-user',
-  templateUrl: './dashboard-user.component.html',
-  styleUrls: ['./dashboard-user.component.css']
+    selector: 'app-dashboard-user',
+    templateUrl: './dashboard-user.component.html',
+    styleUrls: ['./dashboard-user.component.css'],
+    standalone: false
 })
 export class DashboardUserComponent implements OnInit {
   title = 'Admin Usuario';

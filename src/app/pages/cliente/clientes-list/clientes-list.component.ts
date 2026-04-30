@@ -10,9 +10,10 @@ import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-clientes-list',
-  templateUrl: './clientes-list.component.html',
-  styleUrls: ['./clientes-list.component.css']
+    selector: 'app-clientes-list',
+    templateUrl: './clientes-list.component.html',
+    styleUrls: ['./clientes-list.component.css'],
+    standalone: false
 })
 export class ClientesListComponent implements OnInit {
 

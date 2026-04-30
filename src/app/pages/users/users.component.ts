@@ -10,9 +10,10 @@ import Swal from 'sweetalert2';
 import { BusquedasService } from 'src/app/services/busqueda.service';
 
 @Component({
-  selector: 'app-users',
-  templateUrl: './users.component.html',
-  styleUrls: ['./users.component.css']
+    selector: 'app-users',
+    templateUrl: './users.component.html',
+    styleUrls: ['./users.component.css'],
+    standalone: false
 })
 export class UsersComponent implements OnInit {
   title = "Usuarios"

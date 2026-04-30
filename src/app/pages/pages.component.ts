@@ -7,10 +7,10 @@ import { UserService } from '../services/user.service';
 // declare function customInitFunctions(); //llamammos a la funcion que carga los js
 
 @Component({
-  selector: 'app-pages',
-  templateUrl: './pages.component.html',
-  styles: [
-  ]
+    selector: 'app-pages',
+    templateUrl: './pages.component.html',
+    styles: [],
+    standalone: false
 })
 export class PagesComponent implements OnInit {
 

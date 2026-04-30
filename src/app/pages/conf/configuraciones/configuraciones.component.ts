@@ -5,9 +5,10 @@ import { UserService } from 'src/app/services/user.service';
 
 
 @Component({
-  selector: 'app-configuraciones',
-  templateUrl: './configuraciones.component.html',
-  styleUrls: ['./configuraciones.component.css']
+    selector: 'app-configuraciones',
+    templateUrl: './configuraciones.component.html',
+    styleUrls: ['./configuraciones.component.css'],
+    standalone: false
 })
 export class ConfiguracionesComponent implements OnInit, DoCheck {
 

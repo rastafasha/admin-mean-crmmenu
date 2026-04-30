@@ -6,9 +6,10 @@ import { User } from 'src/app/models/user';
 import { UserService } from 'src/app/services/user.service';
 
 @Component({
-  selector: 'app-roles-view',
-  templateUrl: './roles-view.component.html',
-  styleUrls: ['./roles-view.component.css']
+    selector: 'app-roles-view',
+    templateUrl: './roles-view.component.html',
+    styleUrls: ['./roles-view.component.css'],
+    standalone: false
 })
 export class RolesViewComponent implements OnInit {
 

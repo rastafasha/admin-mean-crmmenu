@@ -2,9 +2,10 @@ import { Component, Input, Output, EventEmitter, OnInit } from '@angular/core';
 import { Project } from 'src/app/models/project';
 
 @Component({
-  selector: 'app-projectitem',
-  templateUrl: './projectitem.component.html',
-  styleUrls: ['./projectitem.component.css']
+    selector: 'app-projectitem',
+    templateUrl: './projectitem.component.html',
+    styleUrls: ['./projectitem.component.css'],
+    standalone: false
 })
 export class ProjectitemComponent implements OnInit {
 
