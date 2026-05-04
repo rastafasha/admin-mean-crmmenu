@@ -9,7 +9,8 @@ import { PasswordresetComponent } from './passwordreset/passwordreset.component'
 import { NewpasswordComponent } from './newpassword/newpassword.component';
 import { SharedModule } from "src/app/shared/shared.module";
 
-@NgModule({ declarations: [
+@NgModule({ 
+    declarations: [
         LoginComponent,
         PasswordresetComponent,
         NewpasswordComponent,
@@ -18,9 +19,15 @@ import { SharedModule } from "src/app/shared/shared.module";
         LoginComponent,
         PasswordresetComponent,
         NewpasswordComponent
-    ], imports: [CommonModule,
+    ], imports: [
+        CommonModule,
         RouterModule,
         FormsModule,
         ReactiveFormsModule,
-        SharedModule], providers: [provideHttpClient(withInterceptorsFromDi())] })
+        SharedModule
+    ], 
+        providers: [
+            provideHttpClient(withInterceptorsFromDi())
+        ] 
+    })
 export class AuthModule { }
