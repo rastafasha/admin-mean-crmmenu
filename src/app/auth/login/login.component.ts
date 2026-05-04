@@ -85,49 +85,47 @@ login(){
 
 }
 
-renderButton() {
-  gapi.signin2.render('my-signin2', {
-    'scope': 'profile email',
-    'width': 240,
-    'height': 50,
-    'longtitle': true,
-    'theme': 'dark',
-  });
-  this.startApp();
+// renderButton() {
+//   gapi.signin2.render('my-signin2', {
+//     'scope': 'profile email',
+//     'width': 240,
+//     'height': 50,
+//     'longtitle': true,
+//     'theme': 'dark',
+//   });
+//   this.startApp();
+// }
 
+// async startApp(){
+//   this.usuarioService.googleInit();
+//   this.auth2 = this.usuarioService.auth2;
+
+//   this.attachSignin(document.getElementById('my-signin2'));
   
-}
+// }
 
-async startApp(){
-  this.usuarioService.googleInit();
-  this.auth2 = this.usuarioService.auth2;
+// attachSignin(element) {
+//   this.auth2.attachClickHandler(element, {},
+//       (googleUser) =>{
+//         const id_token = googleUser.getAuthResponse().id_token;
 
-  this.attachSignin(document.getElementById('my-signin2'));
-  
-}
+//         this.usuarioService.loginGoogle(id_token).subscribe(
+//           resp=>{
 
-attachSignin(element) {
-  this.auth2.attachClickHandler(element, {},
-      (googleUser) =>{
-        const id_token = googleUser.getAuthResponse().id_token;
+//             this.ngZone.run(()=>{
+//               this.router.navigateByUrl('/dashboard');
+//             })
+//           }
+//         );
 
-        this.usuarioService.loginGoogle(id_token).subscribe(
-          resp=>{
+//         console.log(gapi.auth2.getAuthInstance())
 
-            this.ngZone.run(()=>{
-              this.router.navigateByUrl('/dashboard');
-            })
-          }
-        );
-
-        console.log(gapi.auth2.getAuthInstance())
-
-      }, (error) =>{
-        alert(JSON.stringify(error, undefined, 2));
-      });
+//       }, (error) =>{
+//         alert(JSON.stringify(error, undefined, 2));
+//       });
 
       
-}
+// }
 
 
 
