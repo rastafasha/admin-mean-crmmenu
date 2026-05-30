@@ -26,7 +26,7 @@ export class ProjectListComponent implements OnInit {
   projects: Project[];
   query: string = '';
   p: number = 1;
-  count: number = 5;
+  count: number = 6;
   loading: boolean = false;
   categories: Category[];
   selectedProject: Project;

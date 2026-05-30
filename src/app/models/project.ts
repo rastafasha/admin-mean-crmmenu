@@ -5,6 +5,8 @@ import { User } from "./user";
 export class Project {
     _id: string;
     name: string;
+    slug: string;
+    num_whatsapp: string;
     url: string;
     type: ProjectType;
     rrss: string;

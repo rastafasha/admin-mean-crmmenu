@@ -81,6 +81,8 @@ export class ProjectEditComponent implements OnInit, OnChanges {
       this.projectForm.patchValue({
         id: project._id,
         name: project.name,
+        slug: project.slug,
+        num_whatsapp: project.num_whatsapp,
         url: project.url,
         rrss: project.rrss,
         category: project.category._id,
@@ -131,6 +133,8 @@ export class ProjectEditComponent implements OnInit, OnChanges {
     this.projectForm = this.fb.group({
       name: ['', Validators.required],
       url: [''],
+      slug: [''],
+      num_whatsapp: [''],
       rrss: ['', Validators.required],
       category: ['', Validators.required],
       hasMenu: ['', Validators.required],
