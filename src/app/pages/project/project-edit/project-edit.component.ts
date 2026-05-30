@@ -11,27 +11,26 @@ import {
   FormBuilder,
   FormGroup,
   Validators,
-  FormArray,
   FormControl,
 } from '@angular/forms';
 import { Category } from 'src/app/models/category';
 import { Pais } from 'src/app/models/pais.model';
-import { Project, ProjectType } from 'src/app/models/project';
+import { Project } from 'src/app/models/project';
 import { User } from 'src/app/models/user';
+import { AuthService } from 'src/app/services/auth.service';
 import { CategoryService } from 'src/app/services/category.service';
 import { PaisService } from 'src/app/services/pais.service';
 import { ProjectService } from 'src/app/services/project.service';
 import { UserService } from 'src/app/services/user.service';
-import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
 
 declare var bootstrap: any;
 
 @Component({
-    selector: 'app-project-edit',
-    templateUrl: './project-edit.component.html',
-    styleUrls: ['./project-edit.component.css'],
-    standalone: false
+  selector: 'app-project-edit',
+  templateUrl: './project-edit.component.html',
+  styleUrls: ['./project-edit.component.css'],
+  standalone: false
 })
 export class ProjectEditComponent implements OnInit, OnChanges {
   @Input() projectSeleccionado;
@@ -40,7 +39,7 @@ export class ProjectEditComponent implements OnInit, OnChanges {
 
   projectForm: FormGroup;
   title: string;
-  usuario: User;
+  usuario: any;
   partners: User[];
   project: Project;
   id: string;
@@ -56,15 +55,16 @@ export class ProjectEditComponent implements OnInit, OnChanges {
   constructor(
     private fb: FormBuilder,
     private usuarioService: UserService,
+    private authService: AuthService,
     private projectService: ProjectService,
     private paisService: PaisService,
     private categoryService: CategoryService,
   ) {
-    this.usuario = usuarioService.usuario;
-    const base_url = environment.apiUrl;
+
   }
 
   ngOnInit(): void {
+    this.usuario = this.authService.getLocalStorage();
     this.validarFormulario();
     this.getCategorias();
     this.getPartners();
@@ -100,7 +100,6 @@ export class ProjectEditComponent implements OnInit, OnChanges {
 
   getCategorias() {
     this.categoryService.getCategories().subscribe((resp: any) => {
-      // console.log(resp);
       this.categorias = resp;
     });
   }
@@ -112,7 +111,6 @@ export class ProjectEditComponent implements OnInit, OnChanges {
 
   getPartners() {
     this.usuarioService.getAllEditors().subscribe((resp: any) => {
-      console.log(resp);
       this.partners = resp;
       this.setPartnersFormArray([]);
     });
@@ -150,33 +148,6 @@ export class ProjectEditComponent implements OnInit, OnChanges {
     });
   }
 
-  // cargarProject(_id: string) {
-  //   if (_id !== null && _id !== undefined) {
-  //     this.title = 'Editando Proyecto';
-  //     this.projectService.getProject(_id).subscribe((res) => {
-  //       this.projectForm.patchValue({
-  //         id: res._id,
-  //         name: res.name,
-  //         url: res.url,
-  //         rrss: res.rrss,
-  //         category: res.category._id,
-  //         hasVisited: res.hasVisited,
-  //         pais: res.pais._id,
-  //         dateVisita: res.dateVisita,
-  //         dateAprobado: res.dateAprobado,
-  //         status: res.status,
-  //         hasMenu: res.hasMenu,
-  //         ubicacion: res.ubicacion,
-  //         tipoMenu: res.tipoMenu,
-  //         notificado: res.notificado,
-  //         partners: res.partners,
-  //       });
-  //       this.projectSeleccionado = res;
-  //     });
-  //   } else {
-  //     this.title = 'Creando Proyecto';
-  //   }
-  // }
 
   onClose() {
     this.projectSeleccionado = null;
@@ -203,27 +174,6 @@ export class ProjectEditComponent implements OnInit, OnChanges {
 
     this.isLoading = true;
     const { nombre } = this.projectForm.value;
-
-    // const formData = new FormData();
-    // formData.append('name', this.projectForm.value.name);
-    // formData.append('url', this.projectForm.value.url);
-    // if (this.projectForm.value.category) {
-    //   formData.append('category', this.projectForm.value.category);
-    // }
-
-    // if (this.projectForm.value.hasVisited) {
-    //   formData.append('hasVisited', this.projectForm.value.hasVisited);
-    // }
-    // if (this.projectForm.value.dateVista) {
-    //   formData.append('dateVista', this.projectForm.value.dateVista);
-    // }
-    // if (this.projectForm.value.type) {
-    //   formData.append('type', this.projectForm.value.type);
-    // }
-    // if (this.FILE_AVATAR) {
-    //   formData.append('imagen', this.FILE_AVATAR);
-    // }
-
     // Extract selected partner IDs from the FormArray
     const selectedPartners = this.projectForm.value.partners
       .map((checked, i) => (checked ? this.partners[i].uid : null))

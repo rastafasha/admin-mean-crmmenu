@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Category } from 'src/app/models/category';
 import { Project } from 'src/app/models/project';
 import { User } from 'src/app/models/user';
+import { AuthService } from 'src/app/services/auth.service';
 import { ProjectService } from 'src/app/services/project.service';
 import { UserService } from 'src/app/services/user.service';
 
@@ -16,7 +17,7 @@ export class DashboardAdminComponent implements OnInit {
   @Input() projects: Project[] = [];
 
   title = 'Panel Administrativo';
-  public user: User;
+  public user: any;
   public profile: User;
   displaycomponent: string = 'none';
   limit = 3;
@@ -33,20 +34,21 @@ export class DashboardAdminComponent implements OnInit {
 
   constructor(
     private userService: UserService,
+    private authService: AuthService,
     private projectService: ProjectService,
     
 
   ) {
-    this.user = userService.usuario;
+    this.user = authService.getLocalStorage();
   }
 
   ngOnInit(): void {
 
-    this.closeMenu();
-    this.getUser();
+    window.scrollTo(0,0);
+    this.authService.closeMenu();
+    this.uid = this.user.uid;
     this.getProjectsData();
     this.subscribeToFilteredProjects();
-    window.scrollTo(0,0);
   }
 
   getProjectsData(){
@@ -72,29 +74,6 @@ export class DashboardAdminComponent implements OnInit {
     });
   }
 
-  closeMenu(){
-    var menuLateral = document.getElementsByClassName("sidebar");
-      for (var i = 0; i<menuLateral.length; i++) {
-         menuLateral[i].classList.remove("active");
-
-      }
-  }
-
-  getUser(): void {
-
-    this.user = JSON.parse(localStorage.getItem('user'));
-    this.uid = this.user.uid;
-  }
-
-  getUserRemoto(id:string){
-    id  = this.user.uid
-    this.userService.getUserById(id).subscribe(
-      res =>{
-        this.usuario = res;
-        error => this.error = error;
-      }
-    );
-  }
 
   openEditModal(): void {
     this.selectedProject = null;

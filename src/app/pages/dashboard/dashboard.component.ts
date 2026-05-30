@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { User } from 'src/app/models/user';
+import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 
 
@@ -12,7 +13,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class DashboardComponent implements OnInit {
   title = 'Panel Administrativo';
-  public user: User;
+  public user: any;
   id:number;
   roleid:number;
 
@@ -20,37 +21,14 @@ export class DashboardComponent implements OnInit {
 
 
   constructor(
-    private userService: UserService,
+    private authService: AuthService,
     private activatedRoute: ActivatedRoute,
   ) {
-    this.user = userService.usuario;
+    this.user = authService.getLocalStorage();
   }
 
   ngOnInit(): void {
-    this.closeMenu();
-    this.getUser();
+    this.authService.closeMenu();
   }
-
-  closeMenu(){
-    var menuLateral = document.getElementsByClassName("sidebar");
-      for (var i = 0; i<menuLateral.length; i++) {
-         menuLateral[i].classList.remove("active");
-
-      }
-  }
-
-  getUser(): void {
-
-    this.user = JSON.parse(localStorage.getItem('user'));
-    // this.activatedRoute.params.subscribe( ({id}) => this.getUserProfile(id));
-  }
-
-  // getUserProfile(id){
-  //   this.userService.getUserById(id).subscribe((data: any) => {
-  //     this.user = data;
-  //     console.log(this.user)
-  //   });
-  // }
-
 
 }

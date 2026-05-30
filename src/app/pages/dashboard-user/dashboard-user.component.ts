@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { User } from 'src/app/models/user';
+import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
 @Component({
@@ -11,7 +12,7 @@ import Swal from 'sweetalert2';
 })
 export class DashboardUserComponent implements OnInit {
   title = 'Admin Usuario';
-  public user: User;
+  public user: any;
   public userprofile: User;
   displaycomponent: string = 'none';
   limit = 3;
@@ -22,42 +23,28 @@ export class DashboardUserComponent implements OnInit {
 
   constructor(
     private userService: UserService,
+    private authService: AuthService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
   ) {
-    this.user = userService.usuario;
+    this.user = authService.getLocalStorage();
   }
 
   ngOnInit(): void {
-    this.closeMenu();
-    this.getUser();
+    this.uid = this.user.uid;
+    this.authService.closeMenu();
     window.scrollTo(0,0);
     // this.getUserProfile();
   }
 
-  closeMenu(){
-    var menuLateral = document.getElementsByClassName("sidebar");
-      for (var i = 0; i<menuLateral.length; i++) {
-         menuLateral[i].classList.remove("active");
-      }
-  }
-
-  getUser(): void {
-    this.user = JSON.parse(localStorage.getItem('user'));
-    this.uid = this.user.uid;
-  }
 
   getUserProfile(){
-    this.userService.getUserById(this.user.uid).subscribe(
-      res =>{
-        this.userprofile = res[0];
+    this.userService.getUserById(this.uid).subscribe(
+      (res:any) =>{
+        this.userprofile = res;
         error => this.error = error;
-        console.log(this.userprofile)
       }
     );
-    // if(this.user.profiles == null ){
-    //   Swal.fire('Debes llenar tu perfil y aceptar las condiciones');
-    // }
   }
 
 

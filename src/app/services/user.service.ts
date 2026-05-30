@@ -54,92 +54,6 @@ export class UserService {
 
 
 
-  guardarLocalStorage(token: string, user: any){
-    localStorage.setItem('token', token);
-    // localStorage.setItem('user', user);
-    localStorage.setItem('user', JSON.stringify(user));
-  }
-
-
-    getLocalStorage(){
-      if(localStorage.getItem('token') && localStorage.getItem('user')){
-        let USER = localStorage.getItem('user');
-        this.usuario = JSON.parse(USER ? USER: '');
-        // this.router.navigateByUrl('/start-meet');
-      }else{
-        this.usuario = null;
-        // this.router.navigateByUrl('/login');
-      }
-    }
-
-
-  // googleInit(){
-
-  //   return new Promise<void>((resolve) =>{
-
-  //     gapi.load('auth2', () =>{
-  //       this.auth2 = gapi.auth2.init({
-  //         client_id: userGoogle,
-  //         cookiepolicy: 'single_host_origin',
-  //       });
-  //       resolve();
-  //     });
-  //   });
-
-
-  // }
-
-
-  logout(){
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    localStorage.removeItem('dark');
-    this.router.navigateByUrl('/login');
-
-    // this.auth2.signOut().then(()=>{
-    //   this.ngZone.run(()=>{
-    //     this.router.navigateByUrl('/login');
-    //   })
-    // })
-  }
-
-  validarToken(): Observable<boolean>{
-
-    return this.http.get(`${base_url}/auth/renew`, {
-      headers: {
-        'x-token': this.token
-      }
-    }).pipe(
-      map((resp: any) => {
-        const { username, email, google, role,  uid} = resp.usuario;
-
-        this.usuario = new User(username, email, google, role, uid);
-
-        this.guardarLocalStorage(resp.token, resp.user);
-        return true;
-      }),
-      catchError(error => of(false))
-    );
-  }
-
-  crearUsuario(formData: RegisterForm){
-    return this.http.post(`${base_url}/usuarios/crear`, formData)
-    .pipe(
-      tap((resp: any) => {
-        this.guardarLocalStorage(resp.token, resp.user);
-      })
-    )
-  }
-
-  crearEditor(formData: RegisterForm){
-    return this.http.post(`${base_url}/usuarios/crearEditor`, formData)
-    .pipe(
-      tap((resp: any) => {
-        this.guardarLocalStorage(resp.token, resp.user);
-      })
-    )
-  }
-
   actualizarPerfil(data: {email: string, nombre: string, role: string}){
 
     data = {
@@ -153,24 +67,6 @@ export class UserService {
   update(user: User){
     return this.http.put(`${base_url}/usuarios/editar/${user}`,this.headers);
   }
-
-  login(formData){
-    return this.http.post(`${base_url}/auth/login`, formData)
-    .pipe(
-      tap((resp: any) => {
-        this.guardarLocalStorage(resp.token, resp.user);
-      })
-    )
-  }
-
-  // loginGoogle(token){debugger
-  //   return this.http.post(`${base_url}/auth/google`, {token})
-  //   .pipe(
-  //     tap((resp: any) => {
-  //       this.guardarLocalStorage(resp.token, resp.user);
-  //     })
-  //   )
-  // }
 
   cargarUsuarios(desde: number = 0){
 
@@ -240,38 +136,12 @@ export class UserService {
   }
 
 
-  closeMenu(){
-    var menuLateral = document.getElementsByClassName("sidebar");
-      for (var i = 0; i<menuLateral.length; i++) {
-         menuLateral[i].classList.remove("active");
-
-      }
-  }
-
+ 
   searchUsers(usuario:any):Observable<any>{
 
     const url = `${base_url}/todo/coleccion/usuarios/${usuario}`;
     return this.http.get<any>(url, this.headers)
   }
-  set_recovery_token(email):Observable<any>{
-
-    const url = `${base_url}/usuarios/user_token/set/${email}`;
-    return this.http.get<any>(url, this.headers)
-  }
-
-
-  verify_token(email,codigo):Observable<any>{
-    const url = `${base_url}/usuarios/user_verify/token/${email}/${codigo}`;
-    return this.http.get<any>(url, this.headers)
-  }
-
-  change_password(email,data):Observable<any>{debugger
-    const url = `${base_url}/usuarios/user_password/change/${email}/${data}`;
-    return this.http.put<any>(url, this.headers)
-  }
-  forgotPassword(data):Observable<any>{debugger
-    const url = `${base_url}/usuarios/user_password/change/${data}`;
-    return this.http.put<any>(url, this.headers)
-  }
+  
 
 }

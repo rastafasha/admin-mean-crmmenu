@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
 @Component({
@@ -26,7 +27,7 @@ export class NewpasswordComponent implements OnInit {
     private router: Router,
     private activatedRouter: ActivatedRoute,
     private fb: FormBuilder,
-    private userService: UserService,
+    private authService: AuthService,
   ) {
     this.passwordForm = this.fb.group({
       email: [ null, [Validators.required] ],
@@ -73,7 +74,7 @@ passwordsIguales(pass1Name: string, pass2Name: string){
 
 newPassword(){
 
-  this.userService.change_password(this.email, this.passwordForm.value).subscribe(
+  this.authService.change_password(this.email, this.passwordForm.value).subscribe(
     resp =>{
 
       Swal.fire('Exito!', `Contraseña Actualizada`, 'success');

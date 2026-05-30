@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { User } from 'src/app/models/user';
+import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 
 
@@ -24,21 +25,20 @@ export class MenuComponent implements OnInit {
 
   @ViewChild('sidenav') sidenav;
 
-  public user: User;
-
+  public user: any;
   error: string;
   id: any;
-  roleid:number;
+  roleid:string;
 
   constructor(
-    private userService: UserService,
-    private activatedRoute: ActivatedRoute,
+    private authServce: AuthService,
   ) {
-    this.user = userService.usuario;
+    
    }
 
   ngOnInit(): void {
-    this.getUser();
+    this.user = this.authServce.getLocalStorage();
+    this.id = this.user.uid;
   }
 
 
@@ -46,17 +46,9 @@ export class MenuComponent implements OnInit {
     this.sidenav.toggle();
   }
 
-  getUser(): void {
-
-    this.user = JSON.parse(localStorage.getItem('user'));
-    this.id = this.user.uid;
-    // console.log(this.user);
-    // this.activatedRoute.params.subscribe( ({id}) => this.getUserProfile(id));
-  }
-
 
   logout(): void {
-    this.userService.logout();
+    this.authServce.logout();
   }
 
 }

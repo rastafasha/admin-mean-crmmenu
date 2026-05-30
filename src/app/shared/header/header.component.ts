@@ -6,6 +6,7 @@ import { ProfileService } from 'src/app/services/profile.service';
 import { MessageService } from 'src/app/services/message.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { UserService } from 'src/app/services/user.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 
 
@@ -21,70 +22,42 @@ export class HeaderComponent implements OnInit {
 
 
   userprofile!: any;
-
-
-  user: User;
+  user: any;
   error: string;
-  id:any;
+  userid:any;
   profile: Profile;
 
   constructor(
     private usuarioService: UserService,
     private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private messageService: MessageService,
-    private storageService: StorageService,
+    private authServce: AuthService,
     private profileService: ProfileService,
     ) {
-      this.user = usuarioService.usuario;
+      this.user = authServce.getLocalStorage();
     }
 
 
 
   ngOnInit() {
-
-    this.getUser();
     // this.getUserServer();
     if (localStorage.getItem('dark')) {
       this.darkmode('dark');
     }
 
-  }
-
-
-
-  getUser(): void {
-
-    this.user = JSON.parse(localStorage.getItem('user'));
-    // console.log(this.user);
     if(!this.user || !this.user.uid || this.user.uid == null || this.user.uid == undefined){
       this.router.navigateByUrl('/login');
+    }else{
+      this.userid = this.user.uid;
+      this.getProfileUser()
     }
-      this.id = this.user.uid;
-    //verifica que se hallan logueado
-    if(!this.user || !this.user.uid){
-      this.router.navigateByUrl('/login');
-    }
-
-    this.listar()
-  }
-
-  getUserServer(){
-    this.usuarioService.getUserById(this.user.uid).subscribe(
-      res =>{
-        this.user = res;
-        error => this.error = error
-        // console.log(this.user);
-      }
-    );
 
   }
 
-  listar(){
-    this.profileService.listarUsuario(this.user.uid).subscribe(
-      response =>{
-        this.profile = response[0];
-        // console.log('profileServer',this.profile);
+
+  getProfileUser(){
+    this.profileService.listarUsuario(this.userid).subscribe(
+      (resp:any) =>{
+        this.profile = resp;
       }
     );
     
@@ -95,24 +68,19 @@ export class HeaderComponent implements OnInit {
     var modalcart = document.getElementsByClassName("dropdown-menu");
       for (var i = 0; i<modalcart.length; i++) {
          modalcart[i].classList.toggle("show");
-
       }
   }
 
 
   openMenu(){
-
     var menuLateral = document.getElementsByClassName("mini-sidebar");
       for (var i = 0; i<menuLateral.length; i++) {
          menuLateral[i].classList.toggle("show-sidebar");
-
       }
   }
 
-  
-
   logout(){
-    this.usuarioService.logout();
+    this.authServce.logout();
   }
 
   darkmode(dark:string){

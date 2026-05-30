@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from 'src/app/services/auth.service';
 import { UserService } from 'src/app/services/user.service';
 import Swal from 'sweetalert2';
 @Component({
@@ -20,7 +21,7 @@ export class PasswordresetComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private userService: UserService,
+    private authService: AuthService,
     private router: Router,
   ) {
     this.resetpaswordForm = this.fb.group({
@@ -36,16 +37,14 @@ export class PasswordresetComponent implements OnInit {
 
   resetPassword(){
 
-  this.userService.forgotPassword(this.resetpaswordForm.value).subscribe(
+  this.authService.forgotPassword(this.resetpaswordForm.value).subscribe(
     resp =>{
-      // console.log(resp);
       Swal.fire('Exito!', `Favor revisa tu Correo`, 'success');
     },(error) => {
       Swal.fire('Error', error.error.message, 'error');
       this.errors = error.error.message;
     }
     )
-    // console.log(this.user)
 }
 
 }

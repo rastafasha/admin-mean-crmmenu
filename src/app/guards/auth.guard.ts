@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router, CanLoad, Route, UrlSegment } from '@angular/router';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router, Route, UrlSegment } from '@angular/router';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { UserService } from 'src/app/services/user.service';
+import { AuthService } from '../services/auth.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthGuard implements CanActivate, CanLoad {
+export class AuthGuard  {
 
-  constructor(private usuarioService: UserService,
+  constructor(private authService: AuthService,
     private router: Router){}
 
   canLoad(route: Route, segments: UrlSegment[]): boolean | Observable<boolean> | Promise<boolean> {
-    return this.usuarioService.validarToken()
+    return this.authService.validarToken()
     .pipe(
       tap( estaAutenticado => {
         if(!estaAutenticado){
@@ -29,7 +29,7 @@ export class AuthGuard implements CanActivate, CanLoad {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot){
 
-    return this.usuarioService.validarToken()
+    return this.authService.validarToken()
     .pipe(
       tap( estaAutenticado => {
         if(!estaAutenticado){
