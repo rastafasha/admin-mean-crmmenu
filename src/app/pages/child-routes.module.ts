@@ -18,6 +18,7 @@ import { ClienteEditComponent } from './cliente/cliente-edit/cliente-edit.compon
 import { PaymentsComponent } from './payment/payments.component';
 import { PaymentDetailsComponent } from './payment/payment-details/payment-details.component';
 import { ReportarPagoComponent } from './payment/reportar-pago/reportar-pago.component';
+import { AuthGuard } from '../guards/auth.guard';
 // import { CondicionesComponent } from './condiciones/condiciones.component';
 
 
@@ -25,7 +26,7 @@ import { ReportarPagoComponent } from './payment/reportar-pago/reportar-pago.com
 
 const childRoutes: Routes = [
 
-    { path: '',  component: DashboardComponent, data:{title:'Dashboard'} },
+    { path: '',   component: DashboardComponent, data:{title:'Dashboard'} },
     //auth
 
     //configuraciones

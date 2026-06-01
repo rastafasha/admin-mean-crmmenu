@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, provideZoneChangeDetection } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -13,10 +13,13 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from 'src/environments/environment';
 
-@NgModule({ declarations: [
+@NgModule({
+    declarations: [
         AppComponent
     ],
-    bootstrap: [AppComponent], imports: [BrowserModule,
+    bootstrap: [AppComponent],
+    imports: [
+        BrowserModule,
         AppRoutingModule,
         RouterModule,
         AuthModule,
@@ -28,10 +31,14 @@ import { environment } from 'src/environments/environment';
             // Register the ServiceWorker as soon as the application is stable
             // or after 30 seconds (whichever comes first).
             registrationStrategy: 'registerWhenStable:30000'
-        })], providers: [
+        })],
+    
+    providers: [
+        provideZoneChangeDetection({ eventCoalescing: true }),
         provideHttpClient(
             withInterceptorsFromDi()
         ),
-    ] })
+    ]
+})
 export class AppModule { }
 

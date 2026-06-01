@@ -19,6 +19,7 @@ import { Project } from 'src/app/models/project';
 import { User } from 'src/app/models/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { CategoryService } from 'src/app/services/category.service';
+import { FileUploadService } from 'src/app/services/file-upload.service';
 import { PaisService } from 'src/app/services/pais.service';
 import { ProjectService } from 'src/app/services/project.service';
 import { UserService } from 'src/app/services/user.service';
@@ -51,6 +52,8 @@ export class ProjectEditComponent implements OnInit, OnChanges {
   public IMAGE_PREVISUALIZA: any = 'assets/img/user-06.jpg';
 
   isLoading: boolean = false;
+  currentStep = 1;
+  cargandoImagen = false;
 
   constructor(
     private fb: FormBuilder,
@@ -59,6 +62,7 @@ export class ProjectEditComponent implements OnInit, OnChanges {
     private projectService: ProjectService,
     private paisService: PaisService,
     private categoryService: CategoryService,
+    private fileUploadService: FileUploadService,
   ) {
 
   }
@@ -76,6 +80,7 @@ export class ProjectEditComponent implements OnInit, OnChanges {
       changes['projectSeleccionado'] &&
       changes['projectSeleccionado'].currentValue
     ) {
+      this.title = 'Editando Proyecto';
       const project = changes['projectSeleccionado'].currentValue;
       this.setPartnersFormArray(project.partners);
       this.projectForm.patchValue({
@@ -96,8 +101,12 @@ export class ProjectEditComponent implements OnInit, OnChanges {
         notificado: project.notificado,
         status: project.status,
       });
+      this.projectSeleccionado = project;
+      this.title = 'Editando Proyecto';
+    } else {
       this.title = 'Editando Proyecto';
     }
+
   }
 
   getCategorias() {
@@ -155,17 +164,84 @@ export class ProjectEditComponent implements OnInit, OnChanges {
 
   onClose() {
     this.projectSeleccionado = null;
+    this.currentStep = 1;
     this.projectForm.reset();
     this.title = 'Creando Proyecto';
     // Also reset default values if needed
     this.projectForm.patchValue({
-      status: false,
-      hasVisited: false,
-      hasMenu: false,
-      notificado: false
+      name: null,
+      url: null,
+      slug: null,
+      num_whatsapp: null,
+      rrss: null,
+      category: null,
+      hasMenu: null,
+      tipoMenu: null,
+      ubicacion: null,
+      pais: null,
+      dateVisita: null,
+      dateAprobado: null,
+      status: [false],
+      hasVisited: [false],
+      notificado: [false],
+      partners: null,
+      img: null,
     });
     // Emit event to parent to reset the projectSeleccionado variable
     this.closeModal.emit();
+  }
+
+  nextStep() {
+    const name = this.projectForm.get('name');
+    const url = this.projectForm.get('url');
+    const num_whatsapp = this.projectForm.get('num_whatsapp');
+    const category = this.projectForm.get('category');
+    const hasMenu = this.projectForm.get('hasMenu');
+    const pais = this.projectForm.get('pais');
+    const rrss = this.projectForm.get('rrss');
+    const ubicacion = this.projectForm.get('ubicacion');
+    const tipoMenu = this.projectForm.get('tipoMenu');
+    const dateVisita = this.projectForm.get('dateVisita');
+    const dateAprobado = this.projectForm.get('dateAprobado');
+    const status = this.projectForm.get('status');
+    const hasVisited = this.projectForm.get('hasVisited');
+    const notificado = this.projectForm.get('notificado');
+
+    if (name?.invalid || url?.invalid ||
+      num_whatsapp?.invalid || category?.invalid ||
+      hasMenu?.invalid || pais?.invalid ||
+      rrss?.invalid || ubicacion?.invalid ||
+      tipoMenu?.invalid ||
+      dateVisita?.invalid ||
+      dateAprobado?.invalid ||
+      status?.invalid ||
+      hasVisited?.invalid ||
+      notificado?.invalid
+
+    ) {
+      name?.markAsTouched();
+      url?.markAsTouched();
+      num_whatsapp?.markAsTouched();
+      category?.markAsTouched();
+      hasMenu?.markAsTouched();
+      pais?.markAsTouched();
+      rrss?.markAsTouched();
+      ubicacion?.markAsTouched();
+      tipoMenu?.markAsTouched();
+      dateVisita?.markAsTouched();
+      dateAprobado?.markAsTouched();
+      status?.markAsTouched();
+      hasVisited?.markAsTouched();
+      notificado?.markAsTouched();
+      this.projectForm.markAllAsTouched(); // Esto activa las validaciones visuales
+      return;
+    }
+    this.currentStep = 2;
+
+
+  }
+  prevStep() {
+    this.currentStep = 1;
   }
 
 
@@ -218,18 +294,42 @@ export class ProjectEditComponent implements OnInit, OnChanges {
       //crear
       this.projectService.createProject(dataToSend).subscribe((resp: any) => {
         this.isLoading = false;
-        Swal.fire('Creado', `${nombre} creado correctamente`, 'success');
-        // Close modal programmatically
-        const modalElement = document.getElementById('editProject');
-        const modal = bootstrap.Modal.getInstance(modalElement);
-        if (modal) {
-          modal.hide();
-        }
-        // Emit event to refresh project list
-        this.refreshProjectList.emit();
-        // this.enviarNotificacion();
-        this.ngOnInit()
+        this.projectSeleccionado = resp;
+        Swal.fire('¡Paso 1 completado!', 'Tienda creada. Ahora Agrega la info para el menu y sube la imagen.', 'success');
+        this.currentStep = 2;
       });
     }
   }
+
+  cambiarImagen(file: File) {
+    this.imagenSubir = file;
+
+    if (!file) {
+      return this.imgTemp = null;
+    }
+
+    const reader = new FileReader();
+    const url64 = reader.readAsDataURL(file);
+
+    reader.onloadend = () => {
+      this.imgTemp = reader.result;
+    }
+  }
+
+  subirImagen() {
+    this.cargandoImagen = true;
+    this.fileUploadService
+      .actualizarFoto(this.imagenSubir, 'projects', this.projectSeleccionado._id)
+      .then(img => {
+        this.projectSeleccionado.img = img;
+        this.cargandoImagen = false;
+        Swal.fire('Guardado', 'La imagen fue actualizada', 'success');
+
+      }).catch(err => {
+        this.cargandoImagen = false;
+        Swal.fire('Error', 'No se pudo subir la imagen', 'error');
+
+      })
+  }
+
 }

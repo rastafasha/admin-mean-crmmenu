@@ -9,8 +9,20 @@
             <div class="modal-body">
                 <app-loading *ngIf="isLoading"></app-loading>
                 <div class="container" *ngIf="!isLoading">
-
-                    <form *ngIf="projectForm" class="form-horizontal form-material" (ngSubmit)="handleSubmit()"
+                    <!-- Step Indicator -->
+                        <div class="step-indicator m-t-20 m-b-20">
+                            <div class="step" [ngClass]="{'active': currentStep >= 1, 'completed': currentStep > 1}">
+                                <span class="step-number">1</span>
+                                <span class="step-label">Datos</span>
+                            </div>
+                            <div class="step-line"></div>
+                            <div class="step" [ngClass]="{'active': currentStep >= 2}">
+                                <span class="step-number">2</span>
+                                <span class="step-label">Imagen</span>
+                            </div>
+                        </div>
+                        <div *ngIf="currentStep === 1">
+                            <form *ngIf="projectForm" class="form-horizontal form-material" 
                         [formGroup]="projectForm">
                         <div class="row">
                             <div class="col-xs-12 col-md-4">
@@ -161,28 +173,71 @@
 
                                 </div>
                             </div>
-                            <!-- <div class="col-xs-12 col-md-6">
-                                <label>Subir PDF<span class="required">*</span></label>
-                                <input type="file" class="cz-file-drop-input"
-                                    (change)="cambiarImagen($event.target.files[0])">
-                                <br>
-                                <br>
-                                <button type="button" [disabled]="!imagenSubir" (click)="subirImagen()"
-                                    class="btn btn-success waves-effect waves-light m-r-10 ">
-                                    <i class="fa fa-save"></i> Cambiar imagen
-                                </button>
-
-                            </div> -->
 
                         </div>
-                        <div class="modal-footer d-flex justify-content-end">
-                            <button class="btn btn-outline-success waves-effect waves-light m-r-10"
-                                type="submit">Guardar</button>
-                        </div>
 
-
+                        <div class="row">
+                                    <div class="col-6">
+                                        <button class="btn btn-success waves-effect waves-light m-r-10 btn-block"
+                                            type="button" (click)="nextStep()">Siguiente</button>
+                                    </div>
+                                    <div class="col-6">
+                                        <button (click)="handleSubmit()" class="btn btn-outline-success">
+                                            {{ projectSeleccionado ? 'Actualizar y Continuar' : 'Crear y Continuar' }}
+                                        </button>
+                                    </div>
+                                </div>
 
                     </form>
+                        </div>
+                        <div *ngIf="currentStep === 2">
+                            <app-loading *ngIf="cargandoImagen"></app-loading>
+                            <div *ngIf="!cargandoImagen">
+                                <label> Anexe su foto</label>
+                                <br>
+                                <div class="row">
+                                    <div class="especificaciones col-xs-12" *ngIf="!projectSeleccionado">
+                                        <h4>Debe Crear un post para agregar la imagen</h4>
+                                    </div>
+                                    <div class="especificaciones col-xs-12 col-sm-6" *ngIf="projectSeleccionado">
+                                        <h4>Especificaciones:</h4>
+                                        <ul>
+                                            <li>Tamaño máximo: 300px X 300px</li>
+                                            <li>Peso máximo: 2 mb</li>
+                                            <li>Formato permitido: jpg, .gif, .png</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col-xs-12 col-sm-6" *ngIf="projectSeleccionado ">
+                                        <div class="text-center">
+                                            <img *ngIf="!imgTemp "
+                                                [src]="projectSeleccionado.img | imagenPipe: 'projects'"
+                                                class="img-responsive img-thumbnail" alt="">
+                                            <img *ngIf="imgTemp" [src]="imgTemp" class="img-responsive">
+                                            <div class="form-group ">
+
+                                            </div>
+                                        </div>
+                                        <input type="file" (change)="cambiarImagen($event.target.files[0])">
+                                        <br>
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <button
+                                                    class="btn btn-success waves-effect waves-light m-r-10 btn-block"
+                                                    type="button" (click)="prevStep()">Anterior</button>
+                                            </div>
+                                            <div class="col-6">
+                                                <button type="button" [disabled]="!imagenSubir" (click)="subirImagen()"
+                                                    class="btn btn-success waves-effect waves-light m-r-10 btn-block">
+                                                    <i class="fa fa-save"></i> Subir imagen
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    
                 </div>
             </div>
             <div class="modal-footer ">

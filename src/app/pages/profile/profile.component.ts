@@ -45,7 +45,7 @@ export class ProfileComponent implements OnInit {
 
   public formSumitted = false;
 
-  public storage = environment.apiUrlMedia
+  public storage = environment.mediaUrlRemoto
 
   public url;
   public user : any = {};

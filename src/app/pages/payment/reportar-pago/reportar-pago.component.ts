@@ -55,7 +55,7 @@ export class ReportarPagoComponent implements OnInit, OnChanges {
   user: User;
   partners: User[];
 
-  public storage = environment.apiUrlMedia
+  public storage = environment.mediaUrlRemoto
   clientes: Cliente;
 
 

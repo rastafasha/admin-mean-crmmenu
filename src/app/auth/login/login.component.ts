@@ -65,25 +65,32 @@ export class LoginComponent implements OnInit {
     // this.renderButton();
   }
 
-  login() {
-    this.isLoading = true;
-    this.authService.login(this.loginForm.value).subscribe(
+  
+
+  login(){
+  this.isLoading = true;
+  this.authService.login(this.loginForm.value).subscribe(
       resp => {
-        if (this.loginForm.get('remember').value) {
-          localStorage.setItem('email', this.loginForm.get('email').value);
+        // console.log('Login response:', resp);
+        // Set estaAutenticado always on success (for guard)
+        localStorage.setItem('estaAutenticado', 'true');
+        this.authService.getLocalStorage();
+
+        if (this.loginForm.get('remember')?.value) {
+          localStorage.setItem('email', this.loginForm.get('email')?.value);
         } else {
           localStorage.removeItem('email');
         }
-        this.isLoading = false;
+
         this.router.navigateByUrl('/dashboard');
+
+
+        // this.router.navigateByUrl('/my-account');
       }, (err) => {
         Swal.fire('Error', err.error.msg, 'error');
       }
     )
-
-
-
-  }
+}
 
 
 

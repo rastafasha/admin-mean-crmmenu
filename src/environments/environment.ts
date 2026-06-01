@@ -5,15 +5,11 @@
 export const environment = {
   production: false,
   //apirest local
-  apiUrl: "http://localhost:3000/api",
-  // apiUrlMedia: "http://localhost:3000/api/uploads",
-
-  mediaUrlRemoto: 'https://res.cloudinary.com/dmv6aukai/image/upload/v1741275492/articlesApp/uploads',
-  
+  // apiUrl: "http://localhost:3000/api",
   //remoto
-  // apiUrl: "https://backend-crmmenu-mean.onrender.com/api",
-  apiUrlMedia: "https://res.cloudinary.com/dmv6aukai/image/upload/v1741275492/articlesApp/uploads",
-
+  apiUrl: "https://backend-crmmenu-mean.onrender.com/api",
+  mediaUrlRemoto: 'https://res.cloudinary.com/dmv6aukai/image/upload/v1741275492/mallConnect/uploads',
+  
   clientId: '',
   clientGoogle: ' ',
 

@@ -1,7 +1,8 @@
 <div class="card shadow-sm rounded">
   <div class="card-body">
-    <div class="d-flex justify-content-between align-items-start">
-      <div class="d-flex flex-column ">
+    <div class="topeproject">
+      <img [src]="(project?.img||'') | imagenPipe:'projects'" alt="">
+      <div class="datos ">
         <h5 class="card-title fw-bold text-dark m-0 p-0">{{ project.name }}</h5>
         <p class="small">{{ project.slug }}</p>
       </div>

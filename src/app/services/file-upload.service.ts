@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
-const base_url = environment.apiUrlMedia;
+const base_url = environment.apiUrl;
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,7 @@ export class FileUploadService {
     id: string
   ){
     try {
-      const url = `${base_url}/${tipo}/${id}`;
+      const url = `${base_url}/uploads/${tipo}/${id}`;
       const formData = new FormData();
       formData.append('imagen', archivo);
 
@@ -30,13 +30,13 @@ export class FileUploadService {
 
       const data = await resp.json();
 
-      if(data.ok) {
-        console.log(data);
+     if(data.ok){
         return data.nombreArchivo;
-      } else {
-        console.log(data);
+
+      }else{
         console.log(data.msg);
         return false;
+
       }
     } catch(error) {
       console.log(error);
