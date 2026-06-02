@@ -94,6 +94,8 @@ export class ProjectEditComponent implements OnInit, OnChanges {
         ubicacion: project.ubicacion,
         pais: project.pais._id,
         hasVisited: project.hasVisited,
+        negociacion: project.negociacion,
+        propuesta: project.propuesta,
         hasMenu: project.hasMenu,
         dateVisita: project.dateVisita,
         dateAprobado: project.dateAprobado,
@@ -152,6 +154,8 @@ export class ProjectEditComponent implements OnInit, OnChanges {
       pais: ['', Validators.required],
       dateVisita: [''],
       dateAprobado: [''],
+      negociacion: [''],
+      propuesta: [''],
       status: [false],
       hasVisited: [false],
       notificado: [false],
@@ -181,6 +185,8 @@ export class ProjectEditComponent implements OnInit, OnChanges {
       pais: null,
       dateVisita: null,
       dateAprobado: null,
+      negociacion: null,
+      propuesta: null,
       status: [false],
       hasVisited: [false],
       notificado: [false],
@@ -240,8 +246,16 @@ export class ProjectEditComponent implements OnInit, OnChanges {
 
 
   }
+
+  nextStep3(){
+    this.currentStep = 3;
+  }
+
   prevStep() {
     this.currentStep = 1;
+  }
+  prevStep2() {
+    this.currentStep = 2;
   }
 
 

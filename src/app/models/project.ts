@@ -17,6 +17,8 @@ export class Project {
     notificado: boolean;
     hasVisited: boolean;
     dateVisita: string;
+    propuesta: string;
+    negociacion: string;
     dateAprobado: string;
     status: boolean;
     tipoMenu: string;
