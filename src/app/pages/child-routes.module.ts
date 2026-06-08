@@ -26,7 +26,14 @@ import { AuthGuard } from '../guards/auth.guard';
 
 const childRoutes: Routes = [
 
-    { path: '',   component: DashboardComponent, data:{title:'Dashboard'} },
+    // 1. Redirección inicial: Si entran a '', los manda a /dashboard
+  { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+
+  // 2. Ruta real: Aquí es donde verdaderamente se protege y se carga el componente
+  { path: '', component: DashboardComponent,  data: { title: 'Dashboard' } },
+
+  // 3. Comodín: Cualquier ruta inválida también va al Dashboard (debe ir al final)
+  { path: '**', redirectTo: 'dashboard' },
     //auth
 
     //configuraciones
@@ -71,8 +78,7 @@ const childRoutes: Routes = [
     
    
 
-    { path: '', redirectTo: 'admin', pathMatch: 'full' },
-    { path: '**', component:  DashboardComponent },
+    
 
 
 

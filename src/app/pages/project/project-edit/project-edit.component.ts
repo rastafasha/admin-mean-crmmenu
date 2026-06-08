@@ -209,9 +209,7 @@ export class ProjectEditComponent implements OnInit, OnChanges {
     const tipoMenu = this.projectForm.get('tipoMenu');
     const dateVisita = this.projectForm.get('dateVisita');
     const dateAprobado = this.projectForm.get('dateAprobado');
-    const status = this.projectForm.get('status');
     const hasVisited = this.projectForm.get('hasVisited');
-    const notificado = this.projectForm.get('notificado');
 
     if (name?.invalid || url?.invalid ||
       num_whatsapp?.invalid || category?.invalid ||
@@ -220,9 +218,7 @@ export class ProjectEditComponent implements OnInit, OnChanges {
       tipoMenu?.invalid ||
       dateVisita?.invalid ||
       dateAprobado?.invalid ||
-      status?.invalid ||
-      hasVisited?.invalid ||
-      notificado?.invalid
+      hasVisited?.invalid 
 
     ) {
       name?.markAsTouched();
@@ -236,9 +232,7 @@ export class ProjectEditComponent implements OnInit, OnChanges {
       tipoMenu?.markAsTouched();
       dateVisita?.markAsTouched();
       dateAprobado?.markAsTouched();
-      status?.markAsTouched();
       hasVisited?.markAsTouched();
-      notificado?.markAsTouched();
       this.projectForm.markAllAsTouched(); // Esto activa las validaciones visuales
       return;
     }
@@ -289,7 +283,7 @@ export class ProjectEditComponent implements OnInit, OnChanges {
         this.isLoading = false;
         Swal.fire(
           'Actualizado',
-          `${nombre}  actualizado correctamente`,
+          `${name}  actualizado correctamente`,
           'success'
         );
 

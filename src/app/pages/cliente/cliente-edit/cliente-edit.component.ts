@@ -78,6 +78,7 @@ export class ClienteEditComponent implements OnInit, OnChanges {
         status: cliente.status,
       });
       this.title = 'Editando Cliente';
+      this.clienteSeleccionado = cliente;
     }
   }
 
@@ -216,7 +217,7 @@ export class ClienteEditComponent implements OnInit, OnChanges {
         this.isLoading = false;
         Swal.fire(
           'Actualizado',
-          `${nombre}  actualizado correctamente`,
+          `${name}  actualizado correctamente`,
           'success'
         );
 
@@ -235,7 +236,7 @@ export class ClienteEditComponent implements OnInit, OnChanges {
       //crear
       this.clienteService.createCliente(dataToSend).subscribe((resp: any) => {
         this.isLoading = false;
-        Swal.fire('Creado', `${nombre} creado correctamente`, 'success');
+        Swal.fire('Creado', `${name} creado correctamente`, 'success');
         // Close modal programmatically
         const modalElement = document.getElementById('editCliente');
         const modal = bootstrap.Modal.getInstance(modalElement);

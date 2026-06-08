@@ -22,6 +22,8 @@ export class AuthGuard implements CanActivate, CanLoad {
           if (!localAuth) {
             this.router.navigateByUrl('/login');
           }
+        }else{
+          this.router.navigateByUrl('/dashboard');
         }
       }),
       catchError(() => {

@@ -81,13 +81,15 @@ export class LoginComponent implements OnInit {
         } else {
           localStorage.removeItem('email');
         }
-
+        this.isLoading = false;
         this.router.navigateByUrl('/dashboard');
 
 
         // this.router.navigateByUrl('/my-account');
       }, (err) => {
+
         Swal.fire('Error', err.error.msg, 'error');
+        this.isLoading = false;
       }
     )
 }
