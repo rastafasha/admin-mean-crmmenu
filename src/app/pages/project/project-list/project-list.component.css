@@ -9,6 +9,7 @@
 
 .item{
     display: flex;
+    align-self: baseline;
     
 }
 

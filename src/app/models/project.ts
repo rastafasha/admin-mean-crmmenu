@@ -6,7 +6,6 @@ const base_url = environment.mediaUrlRemoto;
 export class Project {
     _id: string;
     name: string;
-    slug: string;
     num_whatsapp: string;
     url: string;
     type: ProjectType;
@@ -16,14 +15,20 @@ export class Project {
     pais: Pais;
     notificado: boolean;
     hasVisited: boolean;
-    dateVisita: string;
     propuesta: string;
     negociacion: string;
-    dateAprobado: string;
+    dateVisita: Date;
+    dateAprobado: Date;
     status: boolean;
     tipoMenu: string;
     hasMenu: boolean;
     partners: User;
+    estado_seguimiento: 'PENDIENTE'| 'INTERESADO_ESPERA_DATOS'|'CORREO_ENVIADO'| 'RECHAZADO';
+    email_contacto: string;
+    canal_origen: string;
+    correo_enviado: string;
+
+
     img: string;
      get imagenUrl(){
 

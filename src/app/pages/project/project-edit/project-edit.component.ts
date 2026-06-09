@@ -102,6 +102,10 @@ export class ProjectEditComponent implements OnInit, OnChanges {
         tipoMenu: project.tipoMenu,
         notificado: project.notificado,
         status: project.status,
+        estado_seguimiento: project.estado_seguimiento,
+        email_contacto: project.email_contacto,
+        canal_origen: project.canal_origen,
+        correo_enviado: project.correo_enviado,
       });
       this.projectSeleccionado = project;
       this.title = 'Editando Proyecto';
@@ -156,6 +160,10 @@ export class ProjectEditComponent implements OnInit, OnChanges {
       dateAprobado: [''],
       negociacion: [''],
       propuesta: [''],
+      estado_seguimiento: ['PENDIENTE'],
+      email_contacto: [''],
+      canal_origen: [''],
+      correo_enviado: [''],
       status: [false],
       hasVisited: [false],
       notificado: [false],
@@ -191,6 +199,10 @@ export class ProjectEditComponent implements OnInit, OnChanges {
       hasVisited: [false],
       notificado: [false],
       partners: null,
+      estado_seguimiento: null,
+      email_contacto: null,
+      canal_origen: null,
+      correo_enviado: null,
       img: null,
     });
     // Emit event to parent to reset the projectSeleccionado variable
