@@ -206,7 +206,19 @@ export class ProjectEditComponent implements OnInit, OnChanges {
       img: null,
     });
     // Emit event to parent to reset the projectSeleccionado variable
-    this.closeModal.emit();
+    
+
+     // Close modal programmatically
+        const modalElement = document.getElementById('editProject');
+        const modal = bootstrap.Modal.getInstance(modalElement);
+        if (modal) {
+          modal.hide();
+
+        }
+        // Emit event to refresh project list
+        this.refreshProjectList.emit();
+        this.closeModal.emit();
+        this.ngOnInit()
   }
 
   nextStep() {
