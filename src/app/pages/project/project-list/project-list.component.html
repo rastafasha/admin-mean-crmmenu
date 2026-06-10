@@ -23,10 +23,18 @@
 
                                     <select class="form-control selecttyp" [(ngModel)]="selectedType" name="type"
                                         (change)="search()">
-                                        <option value="">Seleccione</option>
+                                        <option value="">Seleccione Categoria</option>
                                         <option *ngFor="let data of categories" [value]="data.nombre">
                                             {{data.nombre}}
                                         </option>
+                                    </select>
+                                    <select class="form-control selecttyp" [(ngModel)]="selectedEstado" name="estado_seguimiento"
+                                        (change)="search()">
+                                        <option value="">Seleccione Estado</option>
+                                        <option value="PENDIENTE">Pendiente</option>
+                                        <option value="INTERESADO_ESPERA_DATOS">Intesado Espera Datos</option>
+                                        <option value="CORREO_ENVIADO">Correo Enviado</option>
+                                        <option value="RECHAZADO">Rechazado</option>
                                     </select>
 
                                     <div class="input-group-append ">
@@ -39,8 +47,6 @@
                                             class="btn btn-primary doctor-refresh ms-2 "><i
                                                 class="fa fa-refresh"></i></a>
                                     </div>
-
-
                                 </div>
 
                             </div>

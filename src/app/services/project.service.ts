@@ -1,7 +1,7 @@
 
 
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { map } from 'rxjs';
 import { Project } from '../models/project';
 import { User } from '../models/user';
@@ -43,13 +43,23 @@ export class ProjectService {
       )
   }
 
-  getProjectsByCategory(categoryName: string) {
+ getProjectsByCategory(categoryName: string, estado?: string) {
     const url = `${baseUrl}/projects/category/${categoryName}`;
-    return this.http.get<any>(url, this.headers)
-      .pipe(
+    
+    // Configuramos los parámetros de la URL de forma limpia
+    let params = new HttpParams();
+    if (estado) {
+        params = params.set('estado_seguimiento', estado);
+    }
+
+    return this.http.get<any>(url, {
+        ...this.headers,
+        params
+    })
+    .pipe(
         map((resp: { ok: boolean, projects: Project[] }) => resp.projects)
-      )
-  }
+    );
+}
 
   getProject(_id: string) {
     const url = `${baseUrl}/projects/${_id}`;
