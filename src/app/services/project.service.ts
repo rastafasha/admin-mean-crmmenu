@@ -76,6 +76,10 @@ export class ProjectService {
         map((resp: { ok: boolean, projects: Project[] }) => resp.projects)
       )
   }
+  veriificarExistencia(nombre: string) {
+    const url = `${baseUrl}/projects/existencia/${nombre}`;
+    return this.http.get<any>(url, this.headers);
+  }
 
   createProject(project: Project) {
     const url = `${baseUrl}/projects/store`;

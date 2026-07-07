@@ -31,7 +31,7 @@
                             <div class="row">
                                 <div class="col-xs-12 col-md-4">
                                     <label>Nombre del Proyecto <span class="required">*</span></label>
-                                    <input type="text" formControlName="name" class="form-control" required>
+                                    <input type="text" formControlName="name" class="form-control" (blur)="verificarProject($event)" required>
                                     <div *ngIf="projectForm.get('name')?.touched" class="text-danger">
                                         <div *ngIf="projectForm.get('name')?.errors?.['required']">
                                             Campo Requerido
@@ -39,6 +39,10 @@
                                         <div *ngIf="projectForm.get('name')?.errors?.['minlength']">
                                             Mínimo 3 Caracteres
                                         </div>
+                                        <!-- Esta es la línea que debe activarse cuando el backend devuelva true -->
+                                            <small *ngIf="projectExiste" class="text-danger mt-1 d-block small">
+                                                * Este nombre ya está registrado.
+                                            </small>
                                     </div>
 
                                 </div>
