@@ -301,7 +301,7 @@ export class ProjectEditComponent implements OnInit, OnChanges {
       next: (res: any) => {
         const control = this.projectForm.get('name');
 
-        if (res && res.existe) {
+        if (res && res.exists) {
           this.projectExiste = true;
 
           // Conservamos errores previos y sumamos 'yaExiste'
