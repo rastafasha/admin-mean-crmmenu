@@ -1,0 +1,83 @@
+<div class="modal fade" id="editLead" tabindex="-1" aria-labelledby="clientModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="clientModalLabel">Lead: {{leadSeleccionado?._id}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    (click)="onClose()"></button>
+            </div>
+            <div class="modal-body modal-lead-container p-4">
+
+                <!-- Bloque 1: Tarjeta Destacada de Marca y URL SaaS -->
+                <div
+                    class="brand-highlight-card p-3 mb-4 text-center rounded-3 bg-light border-start border-primary border-4">
+                    <span class="label-accent"><i class="fa fa-store me-1"></i> Nombre de la Tienda / Comercio</span>
+                    <h3 class="fw-bold text-dark my-1">{{ leadSeleccionado?.nombreLocal }}</h3>
+
+                    <!-- Visualización exacta de cómo se creará su subdominio -->
+                    <div
+                        class="subdomain-preview mt-2 px-3 py-1 bg-white rounded-pill d-inline-block border border-dashed border-primary">
+                        <i class="fa fa-link text-primary me-1 small"></i>
+                        <span class="text-muted small">Subdominio: </span>
+                        <strong class="text-primary font-monospace">{{ leadSeleccionado?.slugDeseado
+                            }}.zlipmenu.com</strong>
+                    </div>
+                </div>
+
+                <h5 class="section-divider-title mb-3 text-secondary text-uppercase fw-bold small-letter-spacing">
+                    <i class="fas fa-user-tie me-2"></i>Información del Propietario
+                </h5>
+
+                <!-- Bloque 2: Rejilla de Dos Columnas para Datos de Contacto -->
+                <div class="info-inline-grid row g-3">
+
+                    <div class="col-12 col-md-6 info-item">
+                        <label class="text-muted small-label"><i class="fa fa-id-card me-1"></i> Nombre
+                            Completo</label>
+                        <p class="fw-semibold text-dark m-0">{{ leadSeleccionado?.nombreDueno }}</p>
+                    </div>
+
+                    <div class="col-12 col-md-6 info-item">
+                        <label class="text-muted small-label">
+                            <i class="fa fa-whatsapp me-1"></i> Teléfono / WhatsApp
+                        </label>
+                        <p class="fw-semibold text-dark m-0">
+                            <a [href]="'https://wa.me' + leadSeleccionado?.telefono" target="_blank"
+                                class="text-decoration-none text-dark hover-whatsapp">
+                                {{ leadSeleccionado?.telefono }} <i class="fa fa-whatsapp text-success ms-1 small"></i>
+                            </a>
+                        </p>
+                    </div>
+
+                    <div class="col-12 col-md-6 info-item">
+                        <label class="text-muted small-label"><i class="fa fa-envelope me-1"></i> Correo
+                            Electrónico</label>
+                        <p class="fw-semibold text-dark m-0 text-truncate">{{ leadSeleccionado?.email }}</p>
+                    </div>
+                    <div class="col-12 col-md-6 info-item">
+                        <label class="text-muted small-label"><i class="fa fa-envelope me-1"></i> Categoría</label>
+                        <p class="fw-semibold text-dark m-0 text-truncate">{{ leadSeleccionado?.categoriaTexto }}</p>
+                    </div>
+                    <div class="col-12 col-md-6 info-item">
+                        <label class="text-muted small-label"><i class="fa fa-envelope me-1"></i> País</label>
+                        <p class="fw-semibold text-dark m-0 text-truncate">{{ leadSeleccionado?.pais?.pais }}</p>
+                    </div>
+
+                    <div class="col-12 col-md-6 info-item">
+                        <label class="text-muted small-label"><i class="fa fa-calendar-alt me-1"></i> Fecha de
+                            Solicitud</label>
+                        <p class="fw-semibold text-muted m-0 small">
+                            {{ leadSeleccionado?.createdAt | date:'dd/MM/yyyy, h:mm:ss a' }}
+                        </p>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                    (click)="onClose()">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>

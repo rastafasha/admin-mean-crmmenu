@@ -92,9 +92,7 @@ export class ClientesListComponent implements OnInit {
 
   }
 
-  onEditClient(cliente: Cliente) {
-    this.selectedClient = cliente;
-  }
+  
 
   onDeleteClient(cliente: Cliente) {
     this.selectedClient = cliente;
@@ -162,6 +160,11 @@ export class ClientesListComponent implements OnInit {
     this.ngOnInit();
 
   }
+
+  onEditClient(cliente: Cliente) {
+    this.selectedClient = cliente;
+  }
+  
   openEditModal(): void {
     this.selectedClient = null;
   }

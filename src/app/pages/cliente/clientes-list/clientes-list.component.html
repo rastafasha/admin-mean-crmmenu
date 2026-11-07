@@ -49,23 +49,23 @@
                     </div>
                     <div class="col-xs-1 col-sm-1" [style.display]="displaycomponent">
                         <div class="text-right">
+                            
                             <button class="btn btn-primary" (click)="openEditModal()" href="javascript:void(0)"
                                 data-bs-toggle="modal" data-bs-target="#editCliente">
-                                <i class="fa fa-pencil"></i>
-                                Crear
+                                <i class="fa fa-plus"></i>
                             </button>
                         </div>
                     </div>
                 </div>
 
                 <app-loading *ngIf="loading"></app-loading>
-                <div *ngIf="clientes.length === 0 ">
+                <div *ngIf="!clientes && !loading">
                     <h3 class="text-center">
                         Aun no posees Clientes
                     </h3>
                 </div>
 
-                <div class="card recent-sales overflow-auto" *ngIf="!loading && clientes.length > 0 ">
+                <div class="card recent-sales overflow-auto" *ngIf="!loading && clientes">
                     <div class="card-body">
                         <pagination-controls (pageChange)="p = $event"
                             [style.display]="displaycomponent"></pagination-controls>

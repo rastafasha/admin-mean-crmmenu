@@ -1,0 +1,52 @@
+.modal-lead-container {
+  
+  /* // Estilos de Etiquetas Superiores de Control */
+  .label-accent {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #6c757d;
+    font-weight: 600;
+  }
+
+  .small-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  /* // Títulos divisores de sección */
+  .section-divider-title {
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid #dee2e6;
+    padding-bottom: 6px;
+    margin-top: 1.5rem;
+  }
+
+  /* // Tarjeta de Vista Previa del Subdominio SaaS */
+  .brand-highlight-card {
+    background-color: #f8f9fa;
+    
+    .subdomain-preview {
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+      border-style: dashed !important;
+    }
+  }
+
+  /* // Elementos de Información Internos */
+  .info-item {
+    p {
+      font-size: 0.95rem;
+    }
+  }
+
+  /* // Enlace interactivo a WhatsApp desde el CRM */
+  .hover-whatsapp {
+    transition: color 0.2s ease;
+    &:hover {
+      color: #25d366 !important;
+    }
+  }
+}

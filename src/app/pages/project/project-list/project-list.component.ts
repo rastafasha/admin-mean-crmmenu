@@ -92,9 +92,7 @@ export class ProjectListComponent implements OnInit {
 
   }
 
-  onEditProject(project: Project) {
-    this.selectedProject = project;
-  }
+
 
   onDeleteProject(project: Project) {
     this.selectedProject = project;
@@ -124,54 +122,49 @@ export class ProjectListComponent implements OnInit {
   }
 
   search() {
-  // CASO 1: No hay término de búsqueda escrito en el input
-  if (!this.query || this.query.trim() === '') {
-    
-    // Subcaso A: Seleccionó una categoría (con o sin estado)
-    if (this.selectedType) {
-      return this.projectService.getProjectsByCategory(this.selectedType, this.selectedEstado)
-        .subscribe((resp: any) => {
-          this.projects = resp;
-          this.projectService.emitFilteredProjects(resp);
-        });
-    } 
-    // Subcaso B: NO hay categoría, pero SÍ hay un estado seleccionado (Usa el nuevo método seguro)
-    else if (this.selectedEstado) {
-      return this.busquedasService.searchByCollection('projects', '', this.selectedEstado)
-        .subscribe((resp: any) => {
-          this.projects = resp.resultados || [];
-          this.projectService.emitFilteredProjects(this.projects);
-        });
-    } 
-    // Subcaso C: Sin filtros seleccionados
-    else {
-      this.ngOnInit();
-      return;
+    // CASO 1: No hay término de búsqueda escrito en el input
+    if (!this.query || this.query.trim() === '') {
+
+      // Subcaso A: Seleccionó una categoría (con o sin estado)
+      if (this.selectedType) {
+        return this.projectService.getProjectsByCategory(this.selectedType, this.selectedEstado)
+          .subscribe((resp: any) => {
+            this.projects = resp;
+            this.projectService.emitFilteredProjects(resp);
+          });
+      }
+      // Subcaso B: NO hay categoría, pero SÍ hay un estado seleccionado (Usa el nuevo método seguro)
+      else if (this.selectedEstado) {
+        return this.busquedasService.searchByCollection('projects', '', this.selectedEstado)
+          .subscribe((resp: any) => {
+            this.projects = resp.resultados || [];
+            this.projectService.emitFilteredProjects(this.projects);
+          });
+      }
+      // Subcaso C: Sin filtros seleccionados
+      else {
+        this.ngOnInit();
+        return;
+      }
     }
-  } 
 
-  // CASO 2: Sí hay un término de búsqueda en el input de texto
-  else {
-    return this.busquedasService.searchGlobal(this.query, this.selectedEstado)
-      .subscribe((resp: any) => {
-        let filteredProjects = resp.projects || [];
+    // CASO 2: Sí hay un término de búsqueda en el input de texto
+    else {
+      return this.busquedasService.searchGlobal(this.query, this.selectedEstado)
+        .subscribe((resp: any) => {
+          let filteredProjects = resp.projects || [];
 
-        if (this.selectedType) {
-          filteredProjects = filteredProjects.filter(
-            (project: any) => project.category?.nombre === this.selectedType
-          );
-        }
+          if (this.selectedType) {
+            filteredProjects = filteredProjects.filter(
+              (project: any) => project.category?.nombre === this.selectedType
+            );
+          }
 
-        this.projects = filteredProjects;
-        this.projectService.emitFilteredProjects(filteredProjects);
-      });
+          this.projects = filteredProjects;
+          this.projectService.emitFilteredProjects(filteredProjects);
+        });
+    }
   }
-}
-
-
-
-
-
 
   PageSize() {
     this.query = '';
@@ -179,6 +172,10 @@ export class ProjectListComponent implements OnInit {
     this.selectedEstado = '';
     this.ngOnInit();
 
+  }
+
+  onEditProject(project: Project) {
+    this.selectedProject = project;
   }
   openEditModal(): void {
     this.selectedProject = null;

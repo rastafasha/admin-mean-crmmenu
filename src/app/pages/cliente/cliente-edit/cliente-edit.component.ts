@@ -10,6 +10,7 @@ import { PaisService } from 'src/app/services/pais.service';
 import { UserService } from 'src/app/services/user.service';
 import { environment } from 'src/environments/environment';
 import Swal from 'sweetalert2';
+
 declare var bootstrap: any;
 
 @Component({

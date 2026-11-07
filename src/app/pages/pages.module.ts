@@ -10,7 +10,7 @@ import { RouterModule } from '@angular/router';
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { NgxPaginationModule } from 'ngx-pagination';
 
-import {PagesComponent} from './pages.component';
+import { PagesComponent } from './pages.component';
 import { ConfModule } from './conf/conf.module';
 import { SharedModule } from '../shared/shared.module';
 import { PipesModule } from '../pipes/pipes.module';
@@ -30,8 +30,10 @@ import { BusquedaComponent } from './busqueda/busqueda.component';
 import { ProjectModule } from './project/project.module';
 import { ClienteModule } from './cliente/cliente.module';
 import { PaymentsModule } from './payment/payments.module';
+import { LeadModule } from './lead/lead.module';
 
-@NgModule({ declarations: [
+@NgModule({
+    declarations: [
         DashboardComponent,
         DashboardAdminComponent,
         PagesComponent,
@@ -63,7 +65,10 @@ import { PaymentsModule } from './payment/payments.module';
         NgxPaginationModule,
         ProjectModule,
         ClienteModule,
-        PaymentsModule], providers: [
-        provideHttpClient(withInterceptorsFromDi())
-    ] })
+        PaymentsModule,
+        LeadModule
+    ], providers: [
+            provideHttpClient(withInterceptorsFromDi())
+        ]
+})
 export class PagesModule { }

@@ -19,6 +19,7 @@ import { PaymentsComponent } from './payment/payments.component';
 import { PaymentDetailsComponent } from './payment/payment-details/payment-details.component';
 import { ReportarPagoComponent } from './payment/reportar-pago/reportar-pago.component';
 import { AuthGuard } from '../guards/auth.guard';
+import { LeadListComponent } from './lead/lead-list/lead-list.component';
 // import { CondicionesComponent } from './condiciones/condiciones.component';
 
 
@@ -41,6 +42,8 @@ const childRoutes: Routes = [
     { path: 'buscar', component: BusquedaComponent, data:{tituloPage:'Busquedas'} },
     { path: 'buscar/:termino', component: BusquedaComponent, data:{tituloPage:'Busquedas'} },
     { path: 'rolesconf', component: RolesViewComponent, data:{title:'Planes'} },
+
+    { path: 'leads', component: LeadListComponent, data:{title:'leads'} },
 
 
 

@@ -1,0 +1,11 @@
+.buton{
+    width: 20%;
+    float: left;
+}
+
+.pagetitle {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    float: left;
+}
