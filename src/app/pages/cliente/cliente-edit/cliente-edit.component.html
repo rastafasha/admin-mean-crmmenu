@@ -107,18 +107,73 @@
 
                                 </div>
                             </div>
-                            <!-- <div class="col-xs-12 col-md-6">
-                                <label>Subir PDF<span class="required">*</span></label>
-                                <input type="file" class="cz-file-drop-input"
-                                    (change)="cambiarImagen($event.target.files[0])">
-                                <br>
-                                <br>
-                                <button type="button" [disabled]="!imagenSubir" (click)="subirImagen()"
-                                    class="btn btn-success waves-effect waves-light m-r-10 ">
-                                    <i class="fa fa-save"></i> Cambiar imagen
-                                </button>
+                            <!-- SECCIÓN: DESPLIEGUE DE TIENDA EN ADMIN (Solo visible al editar un cliente existente) -->
+<div *ngIf="clienteSeleccionado" class="mt-4 pt-3 border-top">
+  
+  <!-- Caso A: Ya tiene tienda activa -->
+  <div *ngIf="clienteSeleccionado.url?.includes('.zlipmenu.com')" class="alert alert-success d-flex justify-content-between align-items-center mb-0">
+    <span><strong>Tienda Activa:</strong> {{ clienteSeleccionado.url }}</span>
+    <a [href]="'https://' + clienteSeleccionado.url" target="_blank" class="btn btn-sm btn-outline-success">
+      Abrir Menú
+    </a>
+  </div>
 
-                            </div> -->
+  <!-- Caso B: Aún no tiene tienda y el panel está cerrado -->
+  <div *ngIf="!clienteSeleccionado.url?.includes('.zlipmenu.com') && !mostrarFormTienda" class="d-flex justify-content-between align-items-center bg-light p-3 rounded">
+    <div>
+      <h6 class="mb-0">Infraestructura ZlipMenu</h6>
+      <small class="text-muted">Este cliente aún no tiene su tienda creada en producción.</small>
+    </div>
+    <button type="button" class="btn btn-primary btn-sm" (click)="prepararDespliegueTienda()">
+      Crear Tienda en Admin
+    </button>
+  </div>
+
+  <!-- Caso C: Formulario rápido de confirmación para Producción -->
+  <div *ngIf="mostrarFormTienda" [formGroup]="tiendaForm" class="card border-primary mt-2">
+    <div class="card-header bg-primary text-white py-2 d-flex justify-content-between align-items-center">
+      <span>Configurar Tienda en Producción</span>
+      <button type="button" class="btn-close btn-close-white btn-sm" (click)="mostrarFormTienda = false" [disabled]="cargandoTienda"></button>
+    </div>
+    <div class="card-body">
+      <div class="row g-2">
+        <div class="col-md-6">
+          <label class="form-label form-label-sm">Nombre del Local *</label>
+          <input type="text" class="form-control form-control-sm" formControlName="nombreLocal">
+        </div>
+        <div class="col-md-6">
+          <label class="form-label form-label-sm">Subdominio (Slug) *</label>
+          <div class="input-group input-group-sm">
+            <input type="text" class="form-control" formControlName="slugDeseado">
+            <span class="input-group-text">.zlipmenu.com</span>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <label class="form-label form-label-sm">Nombre Dueño *</label>
+          <input type="text" class="form-control form-control-sm" formControlName="nombreDueno" placeholder="Ej: Juan Pérez">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label form-label-sm">Email Acceso *</label>
+          <input type="email" class="form-control form-control-sm" formControlName="email">
+        </div>
+        <div class="col-md-4">
+          <label class="form-label form-label-sm">WhatsApp *</label>
+          <input type="text" class="form-control form-control-sm" formControlName="telefono">
+        </div>
+      </div>
+
+      <div class="mt-3 text-end">
+        <button type="button" class="btn btn-secondary btn-sm me-2" (click)="mostrarFormTienda = false" [disabled]="cargandoTienda">
+          Cancelar
+        </button>
+        <button type="button" class="btn btn-success btn-sm" (click)="crearTiendaEnProduccion()" [disabled]="tiendaForm.invalid || cargandoTienda">
+          {{ cargandoTienda ? 'Desplegando...' : 'Confirmar y Crear Tienda' }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+</div>
 
                         </div>
 

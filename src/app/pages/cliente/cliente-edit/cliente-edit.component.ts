@@ -40,6 +40,10 @@ export class ClienteEditComponent implements OnInit, OnChanges {
 
   isLoading: boolean = false;
 
+  tiendaForm: FormGroup;
+mostrarFormTienda: boolean = false;
+cargandoTienda: boolean = false;
+
   constructor(
     private fb: FormBuilder,
     private usuarioService: UserService,
@@ -53,10 +57,80 @@ export class ClienteEditComponent implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.validarFormulario();
+    this.validarFormularioTienda();
     this.getCategorias();
     this.getPartners();
     this.getPaises();
   }
+
+  validarFormularioTienda() {
+  this.tiendaForm = this.fb.group({
+    nombreDueno: ['', [Validators.required, Validators.minLength(3)]],
+    email: ['', [Validators.required, Validators.email]],
+    telefono: ['', [Validators.required]],
+    nombreLocal: ['', [Validators.required]],
+    slugDeseado: ['', [Validators.required, Validators.pattern('^[a-z0-9-]+$')]]
+  });
+}
+
+// 3. Función para limpiar acentos y espacios automáticamente
+generarSlug(texto: string): string {
+  if (!texto) return '';
+  return texto
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-');
+}
+
+// 4. Botón para abrir/precargar la sección de crear tienda en producción
+prepararDespliegueTienda() {
+  if (!this.clienteSeleccionado) return;
+
+  this.tiendaForm.reset({
+    nombreDueno: '',
+    email: this.clienteSeleccionado.email_contacto || '',
+    telefono: this.clienteSeleccionado.num_whatsapp || '',
+    nombreLocal: this.clienteSeleccionado.name || '',
+    slugDeseado: this.generarSlug(this.clienteSeleccionado.name)
+  });
+
+  this.mostrarFormTienda = true;
+}
+
+// 5. Ejecutar el despliegue hacia back-zlipmenu
+crearTiendaEnProduccion() {
+  if (this.tiendaForm.invalid || !this.clienteSeleccionado) {
+    this.tiendaForm.markAllAsTouched();
+    return;
+  }
+
+  this.cargandoTienda = true;
+
+  this.clienteService
+    .activarTiendaDesdeProyecto(this.clienteSeleccionado._id, this.tiendaForm.value)
+    .subscribe({
+      next: (resp: any) => {
+        this.cargandoTienda = false;
+        this.mostrarFormTienda = false;
+
+        // Actualizamos la URL en el formulario principal para reflejar el subdominio
+        const nuevaUrl = `${this.tiendaForm.value.slugDeseado}.zlipmenu.com`;
+        this.clienteForm.patchValue({ url: nuevaUrl });
+        this.clienteSeleccionado.url = nuevaUrl;
+
+        Swal.fire('¡Tienda Desplegada!', resp.msg, 'success');
+        this.refreshClientList.emit();
+      },
+      error: (err: any) => {
+        this.cargandoTienda = false;
+        const msgError = err.error?.error || err.error?.msg || 'No se pudo crear la tienda.';
+        Swal.fire('Error', msgError, 'error');
+      }
+    });
+}
 
   ngOnChanges(changes: SimpleChanges): void {
     if (

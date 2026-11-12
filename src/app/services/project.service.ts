@@ -35,7 +35,19 @@ export class ProjectService {
     }
   }
 
-  getProjects() {
+  getProjects(page: number = 1, limit: number = 6) {
+      const url = `${baseUrl}/projects?page=${page}&limit=${limit}`;
+      return this.http.get<any>(url, this.headers).pipe(
+        map((resp: { ok: boolean, projects: Project[], total: number }) => {
+          if (resp.projects) {
+            resp.projects = resp.projects.map(proj => Object.assign(new Project(), proj));
+          }
+          return resp; // Ahora devolvemos el objeto completo { ok, projects, total }
+        })
+      );
+    }
+
+  getProjectsGraphics() {
     const url = `${baseUrl}/projects/`;
     return this.http.get<any>(url, this.headers)
       .pipe(

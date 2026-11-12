@@ -33,6 +33,7 @@ export class ProjectListComponent implements OnInit {
   selectedProject: Project;
   usuario: any;
   usuario_id: any;
+  totalProjects: number = 0;
 
   constructor(
     private projectService: ProjectService,
@@ -69,12 +70,21 @@ export class ProjectListComponent implements OnInit {
 
   }
 
-  getProjects() {
-    this.loading = true;
-    this.projectService.getProjects().subscribe((resp: any) => {
-      this.projects = resp;
-      this.loading = false;
-    })
+  getProjects(pagina: number = 1) {
+     this.loading = true;
+    this.p = pagina; // 👈 Actualizamos la página actual seleccionada en el paginador
+
+    this.projectService.getProjects(this.p, this.count).subscribe({
+      next: (resp: any) => {
+        this.projects = resp.projects || [];
+        this.totalProjects = resp.total || 0; // 👈 Guardamos el total real para NgxPagination
+        this.loading = false;
+      },
+      error: (err) => {
+        console.error('Error cargando projects:', err);
+        this.loading = false;
+      }
+    });
   }
 
   getProjectsByUser(id: string) {

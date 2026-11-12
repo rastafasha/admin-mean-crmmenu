@@ -52,7 +52,7 @@ export class DashboardAdminComponent implements OnInit {
   }
 
   getProjectsData(){
-    this.projectService.getProjects().subscribe((resp:any)=>{
+    this.projectService.getProjectsGraphics().subscribe((resp:any)=>{
       this.projects = resp;
     })
   }
